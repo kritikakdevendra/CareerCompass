@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Psychometric Test – 10th & 12th Students</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b3e;
+    --navy-mid: #162453;
+    --gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --cream: #faf7f2;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --text-light: #5a6080;
+    --border: #d8d4cc;
+    --success: #2d7a4f;
+    --error: #c0392b;
+    --shadow: 0 8px 40px rgba(13,27,62,0.12);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    background-image: radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.07) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 80%, rgba(13,27,62,0.06) 0%, transparent 60%);
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+  }
+  .header-logo {
+    font-family: 'Playfair Display', serif;
+    color: var(--gold);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .header-logo span { color: var(--white); font-weight: 400; }
+  .header-badge {
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold-light);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 4px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap {
+    background: var(--navy-mid);
+    padding: 14px 40px;
+  }
+  .progress-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .step-item {
+    display: flex; flex-direction: column; align-items: center;
+    position: relative; flex: 1;
+  }
+  .step-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: transparent;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.78rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    z-index: 2; position: relative;
+  }
+  .step-dot.active { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+  .step-dot.done { background: var(--success); border-color: var(--success); color: white; }
+  .step-label {
+    font-size: 0.65rem; color: rgba(255,255,255,0.45); margin-top: 5px;
+    text-transform: uppercase; letter-spacing: 0.6px; text-align: center;
+    transition: color 0.3s;
+  }
+  .step-item.active .step-label { color: var(--gold-light); }
+  .step-item.done .step-label { color: rgba(255,255,255,0.65); }
+  .step-line {
+    flex: 1; height: 2px;
+    background: rgba(255,255,255,0.15);
+    margin-bottom: 18px;
+    transition: background 0.4s;
+  }
+  .step-line.done { background: var(--gold); }
+
+  /* MAIN CONTAINER */
+  .container {
+    max-width: 760px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+  }
+
+  /* PAGE CARD */
+  .page-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 50px 56px;
+    border: 1px solid rgba(201,168,76,0.12);
+    animation: fadeUp 0.4s ease;
+    display: none;
+  }
+  .page-card.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-tag {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem; font-weight: 700;
+    color: var(--navy); line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .page-subtitle {
+    font-size: 0.9rem; color: var(--text-light);
+    line-height: 1.55; margin-bottom: 36px;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 2px; margin-bottom: 32px;
+  }
+
+  /* FORM FIELDS */
+  .field-group { margin-bottom: 24px; }
+  .field-group label {
+    display: block; font-size: 0.85rem; font-weight: 600;
+    color: var(--navy); margin-bottom: 8px; letter-spacing: 0.2px;
+  }
+  .field-group label span.req { color: var(--gold); margin-left: 3px; }
+  .field-group input, .field-group select, .field-group textarea {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 9px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem; color: var(--text);
+    background: #fdfcfa;
+    transition: all 0.2s;
+    outline: none;
+  }
+  .field-group input:focus, .field-group select:focus, .field-group textarea:focus {
+    border-color: var(--gold); background: white;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  }
+  .field-group input::placeholder { color: #aaa; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+  /* RADIO/CHECKBOX OPTIONS */
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .options-grid.col-1 { grid-template-columns: 1fr; }
+  .options-grid.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .option-card {
+    border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 14px 16px;
+    cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; gap: 11px;
+    background: #fdfcfa;
+    user-select: none;
+  }
+  .option-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+  .option-card.selected {
+    border-color: var(--gold); background: rgba(201,168,76,0.08);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  .option-card input[type="radio"],
+  .option-card input[type="checkbox"] { display: none; }
+  .option-dot {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+  }
+  .option-dot.square { border-radius: 5px; }
+  .option-card.selected .option-dot {
+    border-color: var(--gold); background: var(--gold);
+  }
+  .option-card.selected .option-dot::after {
+    content: '✓'; color: var(--navy); font-size: 10px; font-weight: 700;
+  }
+  .option-text { font-size: 0.88rem; font-weight: 500; color: var(--text); line-height: 1.3; }
+  .option-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 2px; }
+
+  /* SECTION HEADING IN FORM */
+  .section-label {
+    font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-light);
+    margin: 28px 0 14px; padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* QUESTION CARDS */
+  .question-card {
+    background: #fdfcfa; border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 22px 24px; margin-bottom: 20px;
+    transition: border-color 0.2s;
+  }
+  .question-card.answered { border-color: rgba(201,168,76,0.4); }
+  .q-number {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 6px;
+  }
+  .q-text { font-size: 0.95rem; font-weight: 500; color: var(--navy); margin-bottom: 14px; line-height: 1.5; }
+  .q-options { display: flex; flex-direction: column; gap: 8px; }
+  .q-option {
+    border: 1.5px solid var(--border); border-radius: 8px;
+    padding: 10px 14px; cursor: pointer; display: flex; align-items: center; gap: 10px;
+    transition: all 0.18s; background: white; font-size: 0.875rem; color: var(--text);
+  }
+  .q-option:hover { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+  .q-option.selected { border-color: var(--gold); background: rgba(201,168,76,0.1); font-weight: 500; }
+  .q-option-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0; transition: all 0.18s;
+  }
+  .q-option.selected .q-option-dot { border-color: var(--gold); background: var(--gold); }
+  .q-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--navy);
+    margin: 32px 0 16px; padding-bottom: 8px;
+    border-bottom: 2px solid rgba(201,168,76,0.3);
+  }
+  .q-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 6px; padding: 3px 10px;
+    font-size: 0.72rem; font-weight: 600; color: var(--gold);
+    letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 16px;
+  }
+
+  /* BUTTONS */
+  .btn-row { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; }
+  .btn {
+    padding: 14px 32px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 600;
+    cursor: pointer; border: none; transition: all 0.2s; letter-spacing: 0.3px;
+  }
+  .btn-primary {
+    background: var(--navy); color: white;
+    box-shadow: 0 4px 16px rgba(13,27,62,0.3);
+  }
+  .btn-primary:hover { background: #1a2d5c; transform: translateY(-1px); box-shadow: 0 6px 22px rgba(13,27,62,0.35); }
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--navy);
+    box-shadow: 0 4px 16px rgba(201,168,76,0.35);
+  }
+  .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(201,168,76,0.45); }
+  .btn-outline {
+    background: transparent; color: var(--text-light);
+    border: 1.5px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--navy); color: var(--navy); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none !important; }
+
+  /* ERROR */
+  .error-msg { color: var(--error); font-size: 0.8rem; margin-top: 6px; display: none; }
+  .field-error input, .field-error select { border-color: var(--error); }
+
+  /* RESULT PAGE */
+  #page-result { display: none; }
+  #page-result.active { display: block; }
+  .result-header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: var(--radius) var(--radius) 0 0;
+    padding: 40px 56px 36px;
+    margin: -50px -56px 0;
+  }
+  .result-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; color: white; margin-bottom: 4px;
+  }
+  .result-meta { font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+  .result-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .result-badge {
+    background: rgba(201,168,76,0.2); border: 1px solid rgba(201,168,76,0.35);
+    color: var(--gold-light); font-size: 0.77rem; font-weight: 600;
+    padding: 5px 14px; border-radius: 20px; letter-spacing: 0.5px;
+  }
+  .result-body { padding-top: 36px; }
+  .result-section {
+    background: #fdfcfa; border: 1px solid var(--border);
+    border-radius: 12px; padding: 26px 28px; margin-bottom: 20px;
+  }
+  .result-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; color: var(--navy); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 9px;
+  }
+  .result-section-title .icon {
+    width: 28px; height: 28px; background: rgba(201,168,76,0.15);
+    border-radius: 7px; display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem;
+  }
+  .result-content {
+    font-size: 0.88rem; line-height: 1.8; color: var(--text-light);
+    white-space: pre-wrap;
+  }
+  .compat-bar-wrap { margin: 16px 0; }
+  .compat-label { font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .compat-bar { height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+  .compat-fill { height: 100%; border-radius: 5px; transition: width 1.2s ease; background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .loading-overlay {
+    text-align: center; padding: 60px 20px;
+  }
+  .loading-spinner {
+    width: 48px; height: 48px; border: 3px solid var(--border);
+    border-top-color: var(--gold); border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin: 0 auto 20px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--text-light); font-size: 0.9rem; }
+  .loading-steps { margin-top: 16px; font-size: 0.8rem; color: var(--text-light); }
+
+  /* HIDDEN CONDITIONAL */
+  .cond { display: none; }
+  .cond.show { display: block; }
+
+  /* SCROLL TARGET HIGHLIGHT */
+  .highlight-field input, .highlight-field select {
+    border-color: var(--gold) !important;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.2) !important;
+  }
+
+  /* LOCK CIRCLES */
+  .lock-circles { display:flex; gap:14px; }
+  .lock-circle {
+    width:44px; height:44px; border-radius:50%;
+    border:2px solid var(--border);
+    background:#f9f7f4; color:var(--text-light);
+    font-size:0.9rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.35s;
+  }
+  .lock-circle.done {
+    background:var(--gold); border-color:var(--gold);
+    color:var(--navy); transform:scale(1.15);
+    box-shadow:0 4px 14px rgba(201,168,76,0.4);
+  }
+  .lock-circle.done::after { content:'✓'; }
+  .lock-circle.done span { display:none; }
+  #unlock-btn { transition:all 0.25s; }
+  #unlock-btn:active { transform:scale(0.96); }
+
+  /* PRINT / SHARE */
+  .share-row { display: flex; gap: 12px; margin-top: 28px; }
+  .share-btn {
+    flex: 1; padding: 12px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: white; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem; font-weight: 600; color: var(--navy);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: all 0.2s;
+  }
+  .share-btn:hover { border-color: var(--navy); background: var(--navy); color: white; }
+
+  @media (max-width: 640px) {
+    .page-card { padding: 32px 22px; }
+    .result-header { padding: 30px 22px 26px; margin: -32px -22px 0; }
+    .field-row { grid-template-columns: 1fr; }
+    .options-grid { grid-template-columns: 1fr; }
+    .options-grid.col-3 { grid-template-columns: 1fr 1fr; }
+    .page-title { font-size: 1.5rem; }
+    .progress-wrap { padding: 12px 20px; }
+    .header { padding: 14px 20px; }
+    .container { margin: 20px auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-logo">Career<span>Compass</span></div>
+  <div class="header-badge">Psychometric Test</div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="step-item active" id="step-1">
+      <div class="step-dot active" id="dot-1">1</div>
+      <div class="step-label">Personal</div>
+    </div>
+    <div class="step-line" id="line-1"></div>
+    <div class="step-item" id="step-2">
+      <div class="step-dot" id="dot-2">2</div>
+      <div class="step-label">Education</div>
+    </div>
+    <div class="step-line" id="line-2"></div>
+    <div class="step-item" id="step-3">
+      <div class="step-dot" id="dot-3">3</div>
+      <div class="step-label">Goals</div>
+    </div>
+    <div class="step-line" id="line-3"></div>
+    <div class="step-item" id="step-4">
+      <div class="step-dot" id="dot-4">4</div>
+      <div class="step-label">Questions</div>
+    </div>
+    <div class="step-line" id="line-4"></div>
+    <div class="step-item" id="step-5">
+      <div class="step-dot" id="dot-5">5</div>
+      <div class="step-label">Result</div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===================== PAGE 1: BASIC INFO ===================== -->
+<div class="page-card active" id="page-1">
+  <div class="page-tag">Step 1 of 4</div>
+  <h1 class="page-title">Basic Information</h1>
+  <p class="page-subtitle">Let's start with a few details about you. This helps us personalise your career guidance report.</p>
+  <div class="divider"></div>
+
+  <div class="field-group" id="fg-name">
+    <label>Student Name <span class="req">*</span></label>
+    <input type="text" id="f-name" placeholder="Enter your full name">
+    <div class="error-msg" id="err-name">Please enter your full name.</div>
+  </div>
+  <div class="field-row">
+    <div class="field-group" id="fg-contact">
+      <label>Contact Number <span class="req">*</span></label>
+      <input type="tel" id="f-contact" placeholder="10-digit mobile number">
+      <div class="error-msg" id="err-contact">Enter a valid 10-digit number.</div>
+    </div>
+    <div class="field-group" id="fg-parents">
+      <label>Parent's Contact Number <span class="req">*</span></label>
+      <input type="tel" id="f-parents" placeholder="Parent's mobile number">
+      <div class="error-msg" id="err-parents">Enter a valid 10-digit number.</div>
+    </div>
+  </div>
+  <div class="field-group" id="fg-email">
+    <label>Email ID <span class="req">*</span></label>
+    <input type="email" id="f-email" placeholder="your@email.com">
+    <div class="error-msg" id="err-email">Enter a valid email address.</div>
+  </div>
+
+  <div class="btn-row">
+    <div></div>
+    <button class="btn btn-gold" onclick="goToPage(2)">Next: Education →</button>
+  </div>
+</div>
+
+<!-- ===================== PAGE 2: EDUCATION DETAILS ===================== -->
+<div class="page-card" id="page-2">
+  <div class="page-tag">Step 2 of 4</div>
+  <h1 class="page-title">Education Details</h1>
+  <p class="page-subtitle">Tell us about your current academic background so we can tailor your questions and career options.</p>
+  <div class="divider"></div>
+
+  <div class="field-group" id="fg-qual">
+    <label>Qualification <span class="req">*</span></label>
+    <select id="f-qual" onchange="onQualChange()">
+      <option value="">Select your qualification</option>
+      <option value="SSC">SSC (10th Standard)</option>
+      <option value="HSC">HSC (12th Standard)</option>
+    </select>
+    <div class="error-msg" id="err-qual">Please select your qualification.</div>
+  </div>
+
+  <div class="field-group" id="fg-school">
+    <label>School / College Name <span class="req">*</span></label>
+    <input type="text" id="f-school" placeholder="Enter your school or college name">
+    <div class="error-msg" id="err-school">Please enter your school/college name.</div>
+  </div>
+
+  <div class="field-group" id="fg-board">
+    <label>Board Exam <span class="req">*</span></label>
+    <select id="f-board">
+      <option value="">Select board</option>
+      <option value="Maharashtra State Board">Maharashtra State Board</option>
+      <option value="CBSE">CBSE</option>
+      <option value="ICSE">ICSE</option>
+      <option value="IB">IB (International Baccalaureate)</option>
+      <option value="IGCSE">IGCSE</option>
+      <option value="Other">Other</option>
+    </select>
+    <div class="error-msg" id="err-board">Please select your board.</div>
+  </div>
+
+  <!-- 10th Specific -->
+  <div class="cond" id="cond-ssc">
+    <div class="field-group" id="fg-pct10">
+      <label>Expected Percentage in Board Exam <span class="req">*</span></label>
+      <input type="text" id="f-pct10" placeholder="E.g. 85%">
+    </div>
+  </div>
+
+  <!-- 12th Specific -->
+  <div class="cond" id="cond-hsc">
+    <div class="field-group" id="fg-stream12">
+      <label>Stream in 11th & 12th <span class="req">*</span></label>
+      <div class="options-grid" id="stream12-opts">
+        <label class="option-card" onclick="selectOption(this,'stream12')">
+          <input type="radio" name="stream12" value="Science PCM">
+          <div class="option-dot"></div>
+          <div><div class="option-text">Science – PCM</div><div class="option-sub">Physics · Chemistry · Maths</div></div>
+        </label>
+        <label class="option-card" onclick="selectOption(this,'stream12')">
+          <input type="radio" name="stream12" value="Science PCB">
+          <div class="option-dot"></div>
+          <div><div class="option-text">Science – PCB</div><div class="option-sub">Physics · Chemistry · Biology</div></div>
+        </label>
+        <label class="option-card" onclick="selectOption(this,'stream12')">
+          <input type="radio" name="stream12" value="Commerce">
+          <div class="option-dot"></div>
+          <div><div class="option-text">Commerce</div><div class="option-sub">Accounts · Economics · Business</div></div>
+        </label>
+        <label class="option-card" onclick="selectOption(this,'stream12')">
+          <input type="radio" name="stream12" value="Arts/Humanities">
+          <div class="option-dot"></div>
+          <div><div class="option-text">Arts / Humanities</div><div class="option-sub">Sociology · History · Language</div></div>
+        </label>
+      </div>
+      <div class="error-msg" id="err-stream12">Please select your stream.</div>
+    </div>
+    <div class="field-group" id="fg-pct12">
+      <label>Expected Percentage in Board Exam <span class="req">*</span></label>
+      <input type="text" id="f-pct12" placeholder="E.g. 78%">
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goToPage(1)">← Back</button>
+    <button class="btn btn-gold" onclick="goToPage(3)">Next: Goals →</button>
+  </div>
+</div>
+
+<!-- ===================== PAGE 3: GOALS ===================== -->
+<div class="page-card" id="page-3">
+  <div class="page-tag">Step 3 of 4</div>
+  <h1 class="page-title" id="page3-title">Your Goals & Aspirations</h1>
+  <p class="page-subtitle" id="page3-sub">Tell us about your academic and career plans so we can personalise your psychometric questions.</p>
+  <div class="divider"></div>
+  <div id="page3-content"><!-- Filled dynamically --></div>
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goToPage(2)">← Back</button>
+    <button class="btn btn-gold" onclick="goToPage(4)">Next: Questions →</button>
+  </div>
+</div>
+
+<!-- ===================== PAGE 4: Q&A ===================== -->
+<div class="page-card" id="page-4">
+  <div class="page-tag">Step 4 of 4</div>
+  <h1 class="page-title">Psychometric Questions</h1>
+  <p class="page-subtitle">Answer honestly — there are no right or wrong answers. Your responses help us understand your strengths, interests, and personality.</p>
+  <div class="divider"></div>
+  <div id="questions-container"><!-- Filled dynamically --></div>
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goToPage(3)">← Back</button>
+    <button class="btn btn-gold" onclick="submitTest()">Generate My Report →</button>
+  </div>
+</div>
+
+<!-- ===================== RESULT PAGE ===================== -->
+<div class="page-card" id="page-result">
+
+  <!-- UNLOCK GATE -->
+  <div id="unlock-gate">
+    <div style="text-align:center;padding:20px 0 10px">
+      <div style="font-size:3rem;margin-bottom:16px">🔒</div>
+      <div class="page-tag" style="text-align:center">Your Report Is Ready</div>
+      <h2 class="page-title" style="text-align:center;font-size:1.6rem" id="unlock-name-title">Well Done!</h2>
+      <p class="page-subtitle" style="text-align:center;max-width:440px;margin:8px auto 32px">
+        Your personalised career guidance report has been prepared.<br>
+        Click the button <strong>3 times</strong> to unlock and view your result.
+      </p>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:20px">
+      <div class="lock-circles">
+        <div class="lock-circle" id="lc1">1</div>
+        <div class="lock-circle" id="lc2">2</div>
+        <div class="lock-circle" id="lc3">3</div>
+      </div>
+      <button class="btn btn-gold" id="unlock-btn" onclick="handleUnlockClick()" style="font-size:1rem;padding:16px 48px;letter-spacing:0.5px">
+        🔓 Click to Unlock Result
+      </button>
+      <div id="unlock-status" style="font-size:0.85rem;color:var(--text-light);min-height:24px;text-align:center"></div>
+    </div>
+    <div id="sheet-status" style="margin-top:32px;padding:14px 18px;border-radius:10px;background:#f9f7f4;border:1px solid var(--border);font-size:0.82rem;color:var(--text-light);display:flex;align-items:center;gap:10px">
+      <span id="sheet-icon">⏳</span>
+      <span id="sheet-msg">Saving your details to the counsellor's dashboard…</span>
+    </div>
+  </div>
+
+  <!-- ACTUAL REPORT (hidden until 3 clicks) -->
+  <div id="report-content" style="display:none">
+    <div class="result-header">
+      <div class="page-tag" style="color:var(--gold-light);">Career Guidance Report</div>
+      <div class="result-name" id="res-name">Student Name</div>
+      <div class="result-meta" id="res-meta">Generated on — CareerCompass Psychometric Test</div>
+      <div class="result-badges" id="res-badges"></div>
+    </div>
+    <div class="result-body" id="result-body">
+      <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Analysing your responses…</div>
+        <div class="loading-steps" id="loading-step">Preparing your personalised career guidance report. This may take a moment.</div>
+      </div>
+    </div>
+    <div class="share-row" id="share-row" style="display:none">
+      <button class="share-btn" onclick="window.print()">🖨️ Print Report</button>
+      <button class="share-btn" onclick="copyReport()">📋 Copy Report</button>
+    </div>
+  </div>
+
+</div>
+</div><!-- /container -->
+
+<script>
+// ============================================================
+// DATA STORE
+// ============================================================
+const DATA = {
+  name:'', contact:'', parents:'', email:'',
+  qualification:'', school:'', board:'', pct:'',
+  stream12:'',
+  // Goals
+  stream10_decided: '',
+  know_what_to_do: '',
+  change_stream_after12: '',
+  graduation_choice: '',
+  graduation_other: '',
+  professional_choice: '',
+  professional_other: '',
+  // Answers: array of {q, a, category}
+  answers: []
+};
+
+// ============================================================
+// QUESTIONS BANK
+// ============================================================
+const Q_STREAMS_ALL = [
+  // Science-oriented
+  { id:'s1', text:'When you see a maths puzzle, your first reaction is:', opts:['I love solving it','I try but give up easily','I prefer logical reasoning over calculation','Not interested at all'], category:'Science PCM', stream_map:{'I love solving it':'Science PCM','I try but give up easily':'Arts','I prefer logical reasoning over calculation':'Commerce','Not interested at all':'Arts'} },
+  { id:'s2', text:'Which activity sounds most fun to you?', opts:['Dissecting a frog to understand biology','Building a robot or electronic circuit','Analysing stocks and financial news','Writing a story or painting a picture'], category:'Science PCB', stream_map:{'Dissecting a frog to understand biology':'Science PCB','Building a robot or electronic circuit':'Science PCM','Analysing stocks and financial news':'Commerce','Writing a story or painting a picture':'Arts'} },
+  { id:'s3', text:'If you had a free afternoon, you would most likely:', opts:['Experiment with science projects','Read about economics or business','Explore history or literature','Play sports or physical activity'], category:'General', stream_map:{'Experiment with science projects':'Science PCM','Read about economics or business':'Commerce','Explore history or literature':'Arts','Play sports or physical activity':'General'} },
+  { id:'s4', text:'Your favourite subject in school is:', opts:['Mathematics or Physics','Biology or Chemistry','Accounts or Business Studies','History, Language, or Drawing'], category:'General', stream_map:{'Mathematics or Physics':'Science PCM','Biology or Chemistry':'Science PCB','Accounts or Business Studies':'Commerce','History, Language, or Drawing':'Arts'} },
+  { id:'s5', text:'How do you approach a problem?', opts:['With data and numbers (analytical)','With creativity and imagination','By discussing with others and negotiating','By following gut feeling and intuition'], category:'General', stream_map:{'With data and numbers (analytical)':'Science PCM','With creativity and imagination':'Arts','By discussing with others and negotiating':'Commerce','By following gut feeling and intuition':'General'} },
+  { id:'s6', text:'Which type of news story interests you the most?', opts:['Scientific discovery or space mission','Stock market crash or new startup','Political movement or social issue','Art exhibition or music concert'], category:'General', stream_map:{'Scientific discovery or space mission':'Science PCM','Stock market crash or new startup':'Commerce','Political movement or social issue':'Arts','Art exhibition or music concert':'Arts'} },
+  { id:'s7', text:'Which future career sounds most exciting?', opts:['Doctor or Medical Researcher','Engineer or Software Developer','Chartered Accountant or Business Manager','Journalist, Lawyer, or Social Worker'], category:'General', stream_map:{'Doctor or Medical Researcher':'Science PCB','Engineer or Software Developer':'Science PCM','Chartered Accountant or Business Manager':'Commerce','Journalist, Lawyer, or Social Worker':'Arts'} },
+  { id:'s8', text:'When you read a book, you prefer:', opts:['Science fiction or technology','Finance, business, or self-help','Classic literature or poetry','Horror, thriller, or mystery'], category:'General', stream_map:{'Science fiction or technology':'Science PCM','Finance, business, or self-help':'Commerce','Classic literature or poetry':'Arts','Horror, thriller, or mystery':'General'} },
+  { id:'s9', text:'Which skill would you most like to develop?', opts:['Programming or circuit design','Patient care and medical diagnosis','Tax planning and investment strategy','Public speaking and persuasive writing'], category:'General', stream_map:{'Programming or circuit design':'Science PCM','Patient care and medical diagnosis':'Science PCB','Tax planning and investment strategy':'Commerce','Public speaking and persuasive writing':'Arts'} },
+  { id:'s10', text:'How do you feel about memorising facts?', opts:['I enjoy it — especially scientific formulas','I prefer understanding concepts over rote learning','I don\'t mind it if it helps me pass','I find it difficult and prefer creative work'], category:'General', stream_map:{'I enjoy it — especially scientific formulas':'Science PCM','I prefer understanding concepts over rote learning':'Commerce','I don\'t mind it if it helps me pass':'General','I find it difficult and prefer creative work':'Arts'} },
+  { id:'s11', text:'Your dream workplace would be:', opts:['A laboratory or research centre','A hospital or clinic','A corporate office or financial firm','A newsroom, studio, or courtroom'], category:'General', stream_map:{'A laboratory or research centre':'Science PCM','A hospital or clinic':'Science PCB','A corporate office or financial firm':'Commerce','A newsroom, studio, or courtroom':'Arts'} },
+  { id:'s12', text:'How do you feel about helping others?', opts:['Through scientific or medical innovation','Through financial planning and advice','Through social awareness and activism','Through creative expression and storytelling'], category:'General', stream_map:{'Through scientific or medical innovation':'Science PCB','Through financial planning and advice':'Commerce','Through social awareness and activism':'Arts','Through creative expression and storytelling':'Arts'} },
+  { id:'s13', text:'Which competitive exam would you most willingly prepare for?', opts:['JEE / NEET','CA Foundation / CMA','UPSC / MPSC','Any creative arts entrance exam'], category:'General', stream_map:{'JEE / NEET':'Science PCM','CA Foundation / CMA':'Commerce','UPSC / MPSC':'Arts','Any creative arts entrance exam':'Arts'} },
+  { id:'s14', text:'How do you handle pressure and deadlines?', opts:['I perform well under structured, measurable targets','I strategise and manage time carefully','I adapt by being flexible and creative','I struggle but push through with support'], category:'General', stream_map:{'I perform well under structured, measurable targets':'Science PCM','I strategise and manage time carefully':'Commerce','I adapt by being flexible and creative':'Arts','I struggle but push through with support':'General'} },
+  { id:'s15', text:'What motivates you the most in life?', opts:['Solving complex problems and making discoveries','Making money and building financial security','Changing society and making a social impact','Expressing myself creatively and artistically'], category:'General', stream_map:{'Solving complex problems and making discoveries':'Science PCM','Making money and building financial security':'Commerce','Changing society and making a social impact':'Arts','Expressing myself creatively and artistically':'Arts'} },
+  { id:'s16', text:'If you could invent something, it would be:', opts:['A medical device that saves lives','A financial app that helps people invest','A technology that solves an engineering problem','A platform for artists and creative professionals'], category:'General', stream_map:{'A medical device that saves lives':'Science PCB','A financial app that helps people invest':'Commerce','A technology that solves an engineering problem':'Science PCM','A platform for artists and creative professionals':'Arts'} },
+  { id:'s17', text:'In a group project, you naturally:', opts:['Handle the research and data analysis','Take charge of budgets and resources','Lead communication and presentation','Contribute creative ideas and design'], category:'General', stream_map:{'Handle the research and data analysis':'Science PCM','Take charge of budgets and resources':'Commerce','Lead communication and presentation':'Arts','Contribute creative ideas and design':'Arts'} },
+  { id:'s18', text:'Which word describes you best?', opts:['Analytical','Entrepreneurial','Empathetic','Creative'], category:'General', stream_map:{'Analytical':'Science PCM','Entrepreneurial':'Commerce','Empathetic':'Science PCB','Creative':'Arts'} },
+  { id:'s19', text:'Which subject do you find easiest?', opts:['Physics or Maths','Accounts or Economics','History or Literature','Biology or Chemistry'], category:'General', stream_map:{'Physics or Maths':'Science PCM','Accounts or Economics':'Commerce','History or Literature':'Arts','Biology or Chemistry':'Science PCB'} },
+  { id:'s20', text:'How would you describe your ideal exam paper?', opts:['Full of numerical problems and derivations','Case studies and financial statements','Essays and source-based questions','Diagrams and creative interpretation'], category:'General', stream_map:{'Full of numerical problems and derivations':'Science PCM','Case studies and financial statements':'Commerce','Essays and source-based questions':'Arts','Diagrams and creative interpretation':'Science PCB'} },
+];
+
+// Stream-specific questions for 10th (10 per stream)
+const Q_STREAM_SPECIFIC = {
+  'Science PCM': [
+    { id:'pcm1', text:'Do you enjoy spending long hours solving mathematical equations?', opts:['Yes, very much','Sometimes','Rarely','Not at all'] },
+    { id:'pcm2', text:'Are you comfortable with abstract concepts like calculus or vectors?', opts:['Very comfortable','Somewhat','Need more practice','Not at all'] },
+    { id:'pcm3', text:'Would you enjoy designing machines, buildings, or software?', opts:['Absolutely yes','Maybe','Not sure','Not interested'] },
+    { id:'pcm4', text:'How interested are you in learning how electronic devices work?', opts:['Very interested','Moderately interested','Slightly','Not interested'] },
+    { id:'pcm5', text:'Would you consider preparing for JEE (engineering entrance) for 2 years?', opts:['Yes, definitely','Maybe, if required','Unsure','No, sounds too tough'] },
+    { id:'pcm6', text:'Do you like working with computers, coding, or software tools?', opts:['Love it','Like it somewhat','Neutral','Dislike it'] },
+    { id:'pcm7', text:'Are you comfortable with long hours of study with a structured timetable?', opts:['Yes, I thrive with structure','I manage','It\'s difficult','Not at all'] },
+    { id:'pcm8', text:'Would you enjoy working on bridges, circuits, or space technology?', opts:['Sounds amazing','Somewhat interesting','Not really','No interest'] },
+    { id:'pcm9', text:'Do you keep up with technology news and innovations?', opts:['Always','Sometimes','Rarely','Never'] },
+    { id:'pcm10', text:'Is financial reward important in choosing your career?', opts:['Very important','Somewhat important','Not very important','I will follow my passion regardless'] },
+  ],
+  'Science PCB': [
+    { id:'pcb1', text:'Are you comfortable with the idea of working with patients or sick people?', opts:['Yes, I feel called to it','Yes, somewhat','Uncertain','No, it makes me uncomfortable'] },
+    { id:'pcb2', text:'Do you enjoy subjects like Biology, Anatomy, or Environmental Science?', opts:['Love them','Enjoy them','They\'re okay','Dislike them'] },
+    { id:'pcb3', text:'Would you be willing to study for 5–10 years to become a doctor?', opts:['Absolutely','Probably yes','Unsure','No'] },
+    { id:'pcb4', text:'Are you emotionally strong enough to deal with emergencies?', opts:['Yes, I handle pressure well','I think so','Not sure','I get anxious easily'] },
+    { id:'pcb5', text:'Are you interested in understanding how the human body works?', opts:['Extremely interested','Interested','Neutral','Not interested'] },
+    { id:'pcb6', text:'Would you enjoy working in hospitals, clinics, or research labs?', opts:['Yes, definitely','Maybe','Not sure','No'] },
+    { id:'pcb7', text:'Are you prepared to crack NEET which requires intense preparation?', opts:['Yes, I\'m ready','I\'ll try','Uncertain','It sounds difficult'] },
+    { id:'pcb8', text:'Do you feel empathy and a strong desire to heal others?', opts:['Very strongly','Somewhat','Neutral','Not particularly'] },
+    { id:'pcb9', text:'Are you interested in pharmacy, nursing, or biotechnology if not MBBS?', opts:['Yes, those are good options','Maybe as a backup','Not sure','No'] },
+    { id:'pcb10', text:'Do you enjoy reading about diseases, treatments, or natural sciences?', opts:['Yes, a lot','Sometimes','Rarely','Never'] },
+  ],
+  'Commerce': [
+    { id:'com1', text:'Do you enjoy understanding how businesses work and make profits?', opts:['Very much','Somewhat','Neutral','Not interested'] },
+    { id:'com2', text:'Are you comfortable handling numbers in spreadsheets or calculators?', opts:['Yes, very comfortable','Somewhat','Getting better','Not at all'] },
+    { id:'com3', text:'Would you enjoy running your own business someday?', opts:['Definitely yes','Maybe','Not sure','No, prefer a job'] },
+    { id:'com4', text:'Do you follow economic news, budget announcements, or market trends?', opts:['Yes regularly','Occasionally','Rarely','Never'] },
+    { id:'com5', text:'Are you good at negotiating, persuading, or selling ideas?', opts:['Yes, naturally','Getting better','Somewhat','Not at all'] },
+    { id:'com6', text:'Would you be interested in a career as a CA, MBA, or financial analyst?', opts:['Absolutely','Maybe','Unsure','No'] },
+    { id:'com7', text:'Do you enjoy organising, planning, and managing resources?', opts:['Love it','Like it','Neutral','Dislike it'] },
+    { id:'com8', text:'Are you willing to study hard for CA Foundation or commerce competitive exams?', opts:['Yes, definitely','Probably','Uncertain','No'] },
+    { id:'com9', text:'Do you enjoy understanding laws, taxes, and government policies?', opts:['Very much','Somewhat','Not really','Not at all'] },
+    { id:'com10', text:'Would you prefer to work in a bank, company, or start your own venture?', opts:['Company/Corporate','Bank','Own business/startup','Not sure yet'] },
+  ],
+  'Arts/Humanities': [
+    { id:'art1', text:'Do you enjoy reading novels, poetry, or watching documentaries?', opts:['Love it','Like it','Neutral','Not my thing'] },
+    { id:'art2', text:'Are you interested in history, culture, or social issues?', opts:['Very interested','Interested','Neutral','Not interested'] },
+    { id:'art3', text:'Would you enjoy a career in writing, journalism, or media?', opts:['Yes, definitely','Maybe','Not sure','No'] },
+    { id:'art4', text:'Do you feel strongly about social justice, equality, or human rights?', opts:['Extremely strongly','Strongly','Somewhat','Not particularly'] },
+    { id:'art5', text:'Are you good at expressing yourself — through speaking, writing, or art?', opts:['Excellent','Good','Average','Need improvement'] },
+    { id:'art6', text:'Would you be interested in becoming a lawyer, teacher, or government officer?', opts:['Very interested','Somewhat','Not sure','Not interested'] },
+    { id:'art7', text:'Do you enjoy learning about different languages and cultures?', opts:['Yes, a lot','Somewhat','Neutral','Not really'] },
+    { id:'art8', text:'Are you patient enough for long academic paths like UPSC preparation?', opts:['Yes, I\'m committed','Maybe','Not sure','No'] },
+    { id:'art9', text:'Would you enjoy performing arts — theatre, dance, music, or visual arts?', opts:['Love performing arts','Enjoy as a hobby','Neutral','Not interested'] },
+    { id:'art10', text:'Do you enjoy debate, mock trials, or public speaking activities?', opts:['Very much','Somewhat','Not really','Not at all'] },
+  ],
+};
+
+// 12th Stream post-graduation questions (15 per stream)
+const Q_12TH_STREAM = {
+  'Science PCM': [
+    { id:'h_pcm1', text:'Which engineering branch sounds most appealing to you?', opts:['Computer Science / IT','Mechanical / Civil','Electronics / Electrical','Aerospace / Chemical'] },
+    { id:'h_pcm2', text:'Are you considering preparing for GATE for M.Tech or PSU jobs?', opts:['Yes, definitely','Maybe after B.Tech','Not sure','No'] },
+    { id:'h_pcm3', text:'How important is coding/programming to your future career?', opts:['Core — I want to be a developer','Important as a tool','Secondary skill','Not important'] },
+    { id:'h_pcm4', text:'Would you consider studying abroad for engineering or tech?', opts:['Strongly yes','If I get a scholarship','Maybe','No, prefer India'] },
+    { id:'h_pcm5', text:'Are you interested in Data Science, AI, or Machine Learning?', opts:['Very interested','Somewhat','Neutral','Not interested'] },
+    { id:'h_pcm6', text:'How do you feel about entrepreneurship in the tech space?', opts:['Dream of building a startup','Open to it','Not sure','Prefer job security'] },
+    { id:'h_pcm7', text:'Are you willing to relocate for better opportunities?', opts:['Absolutely yes','Yes within India','Prefer staying in city','No'] },
+    { id:'h_pcm8', text:'How important is a high salary package right after graduation?', opts:['Top priority','Important','Moderately important','Not the main factor'] },
+    { id:'h_pcm9', text:'Would you consider an MBA after engineering?', opts:['Yes, it\'s in my plan','Maybe after work experience','Not sure','No'] },
+    { id:'h_pcm10', text:'Do you enjoy research and development work?', opts:['Love research','Interested','Neutral','Prefer application over research'] },
+    { id:'h_pcm11', text:'Are you more comfortable with theory or hands-on lab work?', opts:['Theory','Lab/Practical','Both equally','Neither'] },
+    { id:'h_pcm12', text:'How do you feel about working in defence/space (ISRO/DRDO)?', opts:['Dream goal','Very interesting','Somewhat','Not for me'] },
+    { id:'h_pcm13', text:'Do you follow tech companies like Google, Microsoft, or TCS?', opts:['Yes, closely','Occasionally','Rarely','Never'] },
+    { id:'h_pcm14', text:'Are you prepared for competitive exams like JEE Advanced or BITS?', opts:['Already preparing','Will prepare','Considering other options','No'] },
+    { id:'h_pcm15', text:'Which career path resonates most with you?', opts:['Software Engineer','Civil/Structural Engineer','Product Manager','Data Scientist'] },
+  ],
+  'Science PCB': [
+    { id:'h_pcb1', text:'Is MBBS your first preference after 12th?', opts:['Absolutely yes','It\'s one of my options','Not sure','No, considering other fields'] },
+    { id:'h_pcb2', text:'Have you started preparing for NEET?', opts:['Yes, seriously','Yes, casually','Planning to start','No'] },
+    { id:'h_pcb3', text:'Would you consider BDS (Dentistry) as an alternative to MBBS?', opts:['Yes, good option','Maybe as backup','Probably not','No'] },
+    { id:'h_pcb4', text:'Are you interested in Pharmacy or Biotechnology?', opts:['Very interested','Somewhat','Not sure','No'] },
+    { id:'h_pcb5', text:'How do you feel about a 5.5-year MBBS + internship?', opts:['Ready for it','Willing but nervous','Not sure','Too long for me'] },
+    { id:'h_pcb6', text:'Would you like to specialise (MD/MS) after MBBS?', opts:['Yes, definitely','Probably','Not sure','No, MBBS is enough'] },
+    { id:'h_pcb7', text:'Are you interested in Ayurveda, Homeopathy, or Naturopathy (BAMS/BHMS)?', opts:['Yes, very interested','Open to it','Unsure','Prefer allopathy'] },
+    { id:'h_pcb8', text:'Would you consider nursing or physiotherapy as a career?', opts:['Yes, good options','Maybe','Unlikely','No'] },
+    { id:'h_pcb9', text:'Are you considering working abroad as a doctor?', opts:['Strongly yes','Maybe after establishing here','Not sure','No'] },
+    { id:'h_pcb10', text:'How do you handle emotional situations like grief or terminal illness?', opts:['Strongly with empathy','I manage well','It is difficult but manageable','I find it very hard'] },
+    { id:'h_pcb11', text:'Would you be interested in medical research or public health?', opts:['Very interested','Somewhat','Not sure','Prefer clinical practice'] },
+    { id:'h_pcb12', text:'Do you prefer working independently or as part of a hospital team?', opts:['Independently','As part of a team','Depends on situation','No preference'] },
+    { id:'h_pcb13', text:'How important is social recognition to you in your career?', opts:['Very important','Somewhat','Not very','Not at all'] },
+    { id:'h_pcb14', text:'Are you interested in Veterinary Science or Agriculture?', opts:['Yes, interesting','Maybe','Unlikely','No'] },
+    { id:'h_pcb15', text:'What drives you towards the medical field?', opts:['Desire to heal people','Financial stability','Family expectation','Personal interest in biology'] },
+  ],
+  'Commerce': [
+    { id:'h_com1', text:'Is Chartered Accountancy (CA) your career goal?', opts:['Yes, top priority','It\'s one option','Not sure','No'] },
+    { id:'h_com2', text:'Are you interested in Company Secretary (CS) or CMA?', opts:['Very interested','Somewhat','Not sure','No, other plans'] },
+    { id:'h_com3', text:'Would you like to pursue MBA after graduation?', opts:['Definitely','Maybe','Not sure','No'] },
+    { id:'h_com4', text:'Are you interested in Banking and Finance careers?', opts:['Very interested','Somewhat','Not really','No'] },
+    { id:'h_com5', text:'How do you feel about starting a business of your own?', opts:['My main goal','Interested but later','Maybe someday','No, prefer a job'] },
+    { id:'h_com6', text:'Do you understand what financial markets and stock trading involve?', opts:['Yes, and I\'m interested','Somewhat','Learning about it','No idea yet'] },
+    { id:'h_com7', text:'Are you interested in Digital Marketing or E-commerce?', opts:['Very interested','Somewhat','Neutral','Not interested'] },
+    { id:'h_com8', text:'How comfortable are you with legal and taxation concepts?', opts:['Very comfortable','Somewhat','Need to improve','Not comfortable'] },
+    { id:'h_com9', text:'Would you consider BBA, BMS, or BBI as your graduation choice?', opts:['Yes, first choice','One of the options','Maybe','No'] },
+    { id:'h_com10', text:'Do you enjoy working with people — clients, customers, or teams?', opts:['Love it','Like it','Neutral','Prefer working alone'] },
+    { id:'h_com11', text:'Are you goal-oriented with strong ambition to climb the corporate ladder?', opts:['Very much','Somewhat','Trying to be','Not particularly'] },
+    { id:'h_com12', text:'Would you prefer working for a large MNC or a startup?', opts:['Large MNC','Mid-size company','Startup','Own business'] },
+    { id:'h_com13', text:'Are you interested in international business or global finance?', opts:['Very interested','Somewhat','Not sure','No'] },
+    { id:'h_com14', text:'Do you follow budget announcements and economic policies?', opts:['Yes, closely','Sometimes','Rarely','No'] },
+    { id:'h_com15', text:'Which role sounds most appealing to you?', opts:['Investment Banker','Entrepreneur','Tax Consultant','HR Manager'] },
+  ],
+  'Arts/Humanities': [
+    { id:'h_art1', text:'Are you considering law (LLB) as a career?', opts:['Yes, top choice','One of my options','Maybe','No'] },
+    { id:'h_art2', text:'Would you like to become a journalist or media professional?', opts:['Absolutely','Maybe','Not sure','No'] },
+    { id:'h_art3', text:'Are you interested in civil services (IAS/IPS/IFS)?', opts:['Strong goal','Considering it','Maybe later','No'] },
+    { id:'h_art4', text:'Do you enjoy teaching as a potential career?', opts:['Love it','Like it','Neutral','Not for me'] },
+    { id:'h_art5', text:'Would you consider Social Work, NGO, or development sector work?', opts:['Very much','Maybe','Unsure','No'] },
+    { id:'h_art6', text:'Are you interested in psychology or counselling?', opts:['Very interested','Somewhat','Not sure','No'] },
+    { id:'h_art7', text:'How do you feel about political science or international relations?', opts:['Very interested','Somewhat','Neutral','Not interested'] },
+    { id:'h_art8', text:'Would you consider a career in performing arts or fine arts?', opts:['Yes, that\'s my passion','Maybe as a side career','Unlikely','No'] },
+    { id:'h_art9', text:'Are you interested in fashion, design, or interior decoration?', opts:['Very interested','Somewhat','Not sure','No'] },
+    { id:'h_art10', text:'Would you enjoy research in humanities — history, sociology, anthropology?', opts:['Love research','Interested','Neutral','Not my thing'] },
+    { id:'h_art11', text:'Are you a strong writer — essays, articles, creative writing?', opts:['Excellent','Good','Average','Needs work'] },
+    { id:'h_art12', text:'Would you enjoy event management or public relations?', opts:['Yes, sounds fun','Maybe','Not sure','No'] },
+    { id:'h_art13', text:'Are you interested in language studies or translation?', opts:['Very interested','Somewhat','Neutral','No'] },
+    { id:'h_art14', text:'Do you enjoy debating or public speaking?', opts:['Love it','Like it','Okay','Not really'] },
+    { id:'h_art15', text:'Which career path resonates most with you?', opts:['Lawyer','Civil Servant (IAS/IPS)','Journalist/Author','Teacher/Counsellor'] },
+  ],
+};
+
+// ============================================================
+// GRADUATION & PROFESSIONAL OPTIONS
+// ============================================================
+const GRAD_OPTIONS = {
+  'Science PCM': ['B.Tech / B.E. (Engineering)','B.Sc (Physics / Mathematics / CS)','BCA (Computer Applications)','B.Arch (Architecture)','B.Sc (Statistics / Data Science)','Integrated M.Sc','Don\'t want any of the above','Other (specify)'],
+  'Science PCB': ['MBBS (Medicine)','BDS (Dentistry)','B.Pharm (Pharmacy)','B.Sc (Biology / Biotechnology / Nursing)','BAMS / BHMS (Ayurveda / Homeopathy)','B.V.Sc (Veterinary)','Don\'t want any of the above','Other (specify)'],
+  'Commerce': ['B.Com (General / Hons)','BBA / BMS / BBI','BAF (Accounting & Finance)','BA (Economics)','BCA (Computer Applications)','Integrated MBA','Don\'t want any of the above','Other (specify)'],
+  'Arts/Humanities': ['BA (various specialisations)','BMM (Mass Media)','BFA (Fine Arts)','LLB (Law)','BSW (Social Work)','B.Ed (Education)','Don\'t want any of the above','Other (specify)'],
+  'Not decided yet': ['B.Tech / B.E.','MBBS / BDS','B.Com / BBA','BA / BMM / BFA','BCA','Don\'t want any of the above','Other (specify)'],
+};
+const PROF_OPTIONS = {
+  'Science PCM': ['JEE (IIT / NIT entrance)','GATE (M.Tech / PSU)','CAT / MBA entrance','Diploma / ITI Courses','Foreign Entrance (GRE / SAT)','None of the above','Other (specify)'],
+  'Science PCB': ['NEET (MBBS/BDS)','AIIMS / JIPMER entrance','Pharmacy entrance exams','Allied Health Entrances','Foreign medical entrance (USMLE / PLAB)','None of the above','Other (specify)'],
+  'Commerce': ['CA Foundation','CS (Company Secretary)','CMA (Cost Accountant)','CFA / FRM (Finance)','CLAT (Law)','None of the above','Other (specify)'],
+  'Arts/Humanities': ['UPSC / MPSC','CLAT (Law)','Mass Media entrance','Fine Arts entrance (NIFT / NID)','BEd / Teacher Training entrance','None of the above','Other (specify)'],
+  'Not decided yet': ['Engineering entrance (JEE)','Medical entrance (NEET)','Commerce professional (CA / CS)','Law entrance (CLAT)','Government exam (UPSC)','None of the above','Other (specify)'],
+};
+
+let currentPage = 1;
+let selectedAnswers = {};
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function goToPage(page) {
+  try {
+    if (page > currentPage) {
+      if (!validatePage(currentPage)) return;
+      if (page === 3) buildPage3();
+      if (page === 4) buildPage4();
+    }
+    document.querySelectorAll('.page-card').forEach(c => c.classList.remove('active'));
+    currentPage = page;
+    if (page === 'result') {
+      document.getElementById('page-result').classList.add('active');
+    } else {
+      const el = document.getElementById('page-' + page);
+      if (el) el.classList.add('active');
+    }
+    updateProgress(page === 'result' ? 5 : page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch(e) {
+    console.error('Navigation error:', e);
+  }
+}
+
+function updateProgress(active) {
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.getElementById('dot-' + i);
+    const step = document.getElementById('step-' + i);
+    const line = document.getElementById('line-' + i);
+    dot.className = 'step-dot';
+    step.className = 'step-item';
+    if (line) line.className = 'step-line';
+    if (i < active) { dot.classList.add('done'); dot.innerHTML = '✓'; step.classList.add('done'); if (line) line.classList.add('done'); }
+    else if (i === active) { dot.classList.add('active'); dot.innerHTML = i; step.classList.add('active'); }
+    else { dot.innerHTML = i; }
+  }
+}
+
+// ============================================================
+// VALIDATION
+// ============================================================
+function showErr(fieldId, errId, msg) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errId);
+  if (f) f.classList.add('field-error');
+  if (e) { e.style.display = 'block'; if (msg) e.textContent = msg; }
+}
+function hideErr(fieldId, errId) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errId);
+  if (f) f.classList.remove('field-error');
+  if (e) e.style.display = 'none';
+}
+function isValidPhone(v) { return /^\d{10}$/.test(v.replace(/[\s\+\-]/g,'').replace(/^91/,'').slice(-10)); }
+
+function validatePage(page) {
+  let valid = true;
+  const fail = (fid, eid, msg) => { showErr(fid, eid, msg); valid = false; };
+  const ok   = (fid, eid)       => { hideErr(fid, eid); };
+
+  if (page === 1) {
+    const name    = document.getElementById('f-name').value.trim();
+    const contact = document.getElementById('f-contact').value.trim();
+    const parents = document.getElementById('f-parents').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    name    ? ok('fg-name','err-name')    : fail('fg-name','err-name','Please enter your full name.');
+    isValidPhone(contact) ? ok('fg-contact','err-contact') : fail('fg-contact','err-contact','Please enter a valid 10-digit mobile number.');
+    isValidPhone(parents) ? ok('fg-parents','err-parents') : fail('fg-parents','err-parents','Please enter a valid 10-digit mobile number.');
+    email   ? ok('fg-email','err-email')  : fail('fg-email','err-email','Please enter your email address.');
+    if (valid) { DATA.name = name; DATA.contact = contact; DATA.parents = parents; DATA.email = email; }
+  }
+
+  if (page === 2) {
+    const qual   = document.getElementById('f-qual').value;
+    const school = document.getElementById('f-school').value.trim();
+    const board  = document.getElementById('f-board').value;
+    qual   ? ok('fg-qual','err-qual')     : fail('fg-qual','err-qual','Please select your qualification.');
+    school ? ok('fg-school','err-school') : fail('fg-school','err-school','Please enter your school/college name.');
+    board  ? ok('fg-board','err-board')   : fail('fg-board','err-board','Please select your board.');
+    if (qual === 'HSC') {
+      const str = document.querySelector('input[name="stream12"]:checked');
+      if (str) { ok('fg-stream12','err-stream12'); DATA.stream12 = str.value; }
+      else     { fail('fg-stream12','err-stream12','Please select your stream.'); }
+    }
+    if (valid) {
+      DATA.qualification = qual;
+      DATA.school = school;
+      DATA.board  = board;
+      const pctEl = qual === 'SSC' ? document.getElementById('f-pct10') : document.getElementById('f-pct12');
+      DATA.pct = pctEl ? pctEl.value : '';
+    }
+  }
+
+  if (page === 3) { valid = validatePage3(); }
+  return valid;
+}
+
+// ============================================================
+// QUALIFICATION CHANGE
+// ============================================================
+function onQualChange() {
+  const q = document.getElementById('f-qual').value;
+  document.getElementById('cond-ssc').className = q === 'SSC' ? 'cond show' : 'cond';
+  document.getElementById('cond-hsc').className = q === 'HSC' ? 'cond show' : 'cond';
+}
+
+// ============================================================
+// OPTION SELECT
+// ============================================================
+function selectOption(el, name) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach(i => { i.closest('.option-card').classList.remove('selected'); });
+  el.classList.add('selected');
+}
+function selectOptionCB(el, name) { el.classList.toggle('selected'); }
+
+// ============================================================
+// PAGE 3 BUILD
+// ============================================================
+function buildPage3() {
+  const q = DATA.qualification;
+  const s12 = DATA.stream12;
+  const cont = document.getElementById('page3-content');
+
+  if (q === 'SSC') {
+    document.getElementById('page3-title').textContent = 'Your Stream Choice for 11th & 12th';
+    document.getElementById('page3-sub').textContent = 'Tell us about the stream you\'re planning for 11th & 12th, along with your graduation and professional course goals.';
+    cont.innerHTML = `
+      <div class="section-label">Do you know which stream you want in 11th & 12th?</div>
+      <div class="options-grid" id="know-opts">
+        <label class="option-card" onclick="selectOption(this,'knowstream'); showStreamChoice(true)"><input type="radio" name="knowstream" value="yes"><div class="option-dot"></div><div class="option-text">Yes, I have decided</div></label>
+        <label class="option-card" onclick="selectOption(this,'knowstream'); showStreamChoice(false); loadGradProf('Not decided yet')"><input type="radio" name="knowstream" value="no"><div class="option-dot"></div><div class="option-text">No, I'm not sure yet</div></label>
+      </div>
+      <div id="stream-choice-block" style="display:none; margin-top:24px">
+        <div class="section-label">Which stream are you planning to take in 11th & 12th?</div>
+        <div class="options-grid" id="stream10-opts">
+          <label class="option-card" onclick="selectOption(this,'stream10'); loadGradProf('Science PCM')"><input type="radio" name="stream10" value="Science PCM"><div class="option-dot"></div><div><div class="option-text">Science – PCM</div><div class="option-sub">Physics · Chemistry · Maths</div></div></label>
+          <label class="option-card" onclick="selectOption(this,'stream10'); loadGradProf('Science PCB')"><input type="radio" name="stream10" value="Science PCB"><div class="option-dot"></div><div><div class="option-text">Science – PCB</div><div class="option-sub">Physics · Chemistry · Biology</div></div></label>
+          <label class="option-card" onclick="selectOption(this,'stream10'); loadGradProf('Commerce')"><input type="radio" name="stream10" value="Commerce"><div class="option-dot"></div><div><div class="option-text">Commerce</div><div class="option-sub">Accounts · Economics</div></div></label>
+          <label class="option-card" onclick="selectOption(this,'stream10'); loadGradProf('Arts/Humanities')"><input type="radio" name="stream10" value="Arts/Humanities"><div class="option-dot"></div><div><div class="option-text">Arts / Humanities</div><div class="option-sub">History · Literature · Drawing</div></div></label>
+        </div>
+      </div>
+      <div id="grad-prof-block"></div>
+      <div class="error-msg" id="err-page3" style="display:none;font-size:0.85rem;margin-top:8px">Please complete all required selections.</div>
+    `;
+  } else {
+    // HSC
+    document.getElementById('page3-title').textContent = 'Post-12th Goals & Aspirations';
+    document.getElementById('page3-sub').textContent = 'You\'re in ' + s12 + '. Tell us about your plans after completing 12th standard.';
+    cont.innerHTML = `
+      <div class="section-label">Are you planning to change your stream after 12th?</div>
+      <div class="options-grid" id="changestream-opts">
+        <label class="option-card" onclick="selectOption(this,'changestream'); loadGradProfHSC(DATA.stream12)"><input type="radio" name="changestream" value="no"><div class="option-dot"></div><div><div class="option-text">No — Continue in same stream</div><div class="option-sub">Pursue graduation aligned to ${s12}</div></div></label>
+        <label class="option-card" onclick="selectOption(this,'changestream'); loadGradProfHSC(DATA.stream12)"><input type="radio" name="changestream" value="yes"><div class="option-dot"></div><div><div class="option-text">Yes — Switch stream</div><div class="option-sub">Explore options outside ${s12}</div></div></label>
+        <label class="option-card" onclick="selectOption(this,'changestream'); loadGradProfHSC(DATA.stream12)"><input type="radio" name="changestream" value="unsure"><div class="option-dot"></div><div class="option-text">Not sure yet</div></label>
+      </div>
+      <div id="grad-prof-block-hsc" style="margin-top:8px"></div>
+      <div class="error-msg" id="err-page3" style="display:none;font-size:0.85rem;margin-top:8px">Please complete all required selections.</div>
+    `;
+    // Load grad/prof for existing stream
+    loadGradProfHSC(s12);
+  }
+}
+
+function showStreamChoice(show) {
+  document.getElementById('stream-choice-block').style.display = show ? 'block' : 'none';
+  if (!show) {
+    loadGradProf('Not decided yet');
+    DATA.stream10_decided = 'no';
+  } else {
+    document.getElementById('grad-prof-block').innerHTML = '';
+    DATA.stream10_decided = 'yes';
+  }
+}
+
+function loadGradProf(stream) {
+  const grads = GRAD_OPTIONS[stream] || [];
+  const profs = PROF_OPTIONS[stream] || [];
+  document.getElementById('grad-prof-block').innerHTML = buildGradProfHTML(grads, profs, 'ssc', stream);
+}
+
+function loadGradProfHSC(stream) {
+  const cs = document.querySelector('input[name="changestream"]:checked');
+  const effectiveStream = cs && cs.value === 'yes' ? 'Not decided yet' : stream;
+  const grads = GRAD_OPTIONS[effectiveStream] || GRAD_OPTIONS[stream] || [];
+  const profs = PROF_OPTIONS[effectiveStream] || PROF_OPTIONS[stream] || [];
+  document.getElementById('grad-prof-block-hsc').innerHTML = buildGradProfHTML(grads, profs, 'hsc', effectiveStream);
+}
+
+function buildGradProfHTML(grads, profs, suffix, stream) {
+  const gradItems = grads.map(g => {
+    if (g === 'Other (specify)') return `<label class="option-card" onclick="selectOption(this,'grad_${suffix}'); toggleOther('grad-other-${suffix}',true)"><input type="radio" name="grad_${suffix}" value="Other"><div class="option-dot"></div><div class="option-text">Other (specify)</div></label>`;
+    if (g === "Don't want any of the above") return `<label class="option-card" onclick="selectOption(this,'grad_${suffix}'); toggleOther('grad-other-${suffix}',false)"><input type="radio" name="grad_${suffix}" value="None"><div class="option-dot"></div><div class="option-text">Don't want any of the above</div></label>`;
+    return `<label class="option-card" onclick="selectOption(this,'grad_${suffix}'); toggleOther('grad-other-${suffix}',false)"><input type="radio" name="grad_${suffix}" value="${g}"><div class="option-dot"></div><div class="option-text">${g}</div></label>`;
+  }).join('');
+  const profItems = profs.map(p => {
+    if (p === 'Other (specify)') return `<label class="option-card" onclick="selectOption(this,'prof_${suffix}'); toggleOther('prof-other-${suffix}',true)"><input type="radio" name="prof_${suffix}" value="Other"><div class="option-dot"></div><div class="option-text">Other (specify)</div></label>`;
+    if (p === 'None of the above') return `<label class="option-card" onclick="selectOption(this,'prof_${suffix}'); toggleOther('prof-other-${suffix}',false)"><input type="radio" name="prof_${suffix}" value="None"><div class="option-dot"></div><div class="option-text">None of the above</div></label>`;
+    return `<label class="option-card" onclick="selectOption(this,'prof_${suffix}'); toggleOther('prof-other-${suffix}',false)"><input type="radio" name="prof_${suffix}" value="${p}"><div class="option-dot"></div><div class="option-text">${p}</div></label>`;
+  }).join('');
+  return `
+    <div style="margin-top:28px">
+      <div class="section-label">Graduation Course Interest</div>
+      <div class="options-grid col-1">${gradItems}</div>
+      <div class="cond" id="grad-other-${suffix}" style="margin-top:10px"><div class="field-group"><input type="text" id="grad-other-val-${suffix}" placeholder="Specify graduation course"></div></div>
+    </div>
+    <div style="margin-top:24px">
+      <div class="section-label">Professional Course / Competitive Exam Interest</div>
+      <div class="options-grid col-1">${profItems}</div>
+      <div class="cond" id="prof-other-${suffix}" style="margin-top:10px"><div class="field-group"><input type="text" id="prof-other-val-${suffix}" placeholder="Specify professional course"></div></div>
+    </div>
+  `;
+}
+
+function toggleOther(id, show) {
+  document.getElementById(id).className = show ? 'cond show' : 'cond';
+}
+
+function setErr3(msg) {
+  const e = document.getElementById('err-page3');
+  if (e) { e.style.display = 'block'; e.textContent = msg; }
+}
+function clrErr3() {
+  const e = document.getElementById('err-page3');
+  if (e) e.style.display = 'none';
+}
+
+function validatePage3() {
+  const q = DATA.qualification;
+
+  if (q === 'SSC') {
+    const knowS = document.querySelector('input[name="knowstream"]:checked');
+    if (!knowS) { setErr3('Please indicate whether you have decided your stream or not.'); return false; }
+    DATA.know_what_to_do = knowS.value;
+
+    if (knowS.value === 'yes') {
+      const s10 = document.querySelector('input[name="stream10"]:checked');
+      if (!s10) { setErr3('Please select the stream you plan to take in 11th & 12th.'); return false; }
+      DATA.stream10_decided = s10.value;
+    } else {
+      DATA.stream10_decided = 'Not decided yet';
+    }
+
+    const grad = document.querySelector('input[name="grad_ssc"]:checked');
+    if (!grad) { setErr3('Please select a graduation course preference below.'); return false; }
+    const gradOtherEl = document.getElementById('grad-other-val-ssc');
+    DATA.graduation_choice = grad.value === 'Other' ? (gradOtherEl ? gradOtherEl.value || 'Other' : 'Other') : grad.value;
+
+    const prof = document.querySelector('input[name="prof_ssc"]:checked');
+    if (!prof) { setErr3('Please select a professional course / competitive exam preference below.'); return false; }
+    const profOtherEl = document.getElementById('prof-other-val-ssc');
+    DATA.professional_choice = prof.value === 'Other' ? (profOtherEl ? profOtherEl.value || 'Other' : 'Other') : prof.value;
+
+  } else {
+    const cs = document.querySelector('input[name="changestream"]:checked');
+    if (!cs) { setErr3('Please indicate whether you plan to change your stream after 12th.'); return false; }
+    DATA.change_stream_after12 = cs.value;
+
+    // Reload grad/prof if not yet loaded
+    if (!document.querySelector('input[name="grad_hsc"]')) {
+      loadGradProfHSC(DATA.stream12);
+    }
+
+    const grad = document.querySelector('input[name="grad_hsc"]:checked');
+    if (!grad) { setErr3('Please select a graduation course preference below.'); return false; }
+    const gradOtherEl = document.getElementById('grad-other-val-hsc');
+    DATA.graduation_choice = grad.value === 'Other' ? (gradOtherEl ? gradOtherEl.value || 'Other' : 'Other') : grad.value;
+
+    const prof = document.querySelector('input[name="prof_hsc"]:checked');
+    if (!prof) { setErr3('Please select a professional course / competitive exam preference below.'); return false; }
+    const profOtherEl = document.getElementById('prof-other-val-hsc');
+    DATA.professional_choice = prof.value === 'Other' ? (profOtherEl ? profOtherEl.value || 'Other' : 'Other') : prof.value;
+  }
+
+  clrErr3();
+  return true;
+}
+
+// ============================================================
+// PAGE 4 BUILD
+// ============================================================
+function buildPage4() {
+  const q = DATA.qualification;
+  const cont = document.getElementById('questions-container');
+  cont.innerHTML = '';
+  selectedAnswers = {};
+  let qs = [];
+
+  if (q === 'SSC') {
+    const stream = DATA.stream10_decided !== 'Not decided yet' ? DATA.stream10_decided : null;
+    if (stream && stream !== 'no') {
+      // 10 stream-specific + 15 all-streams general (from Q_STREAMS_ALL, first 15)
+      const spec = (Q_STREAM_SPECIFIC[stream] || []).slice(0, 10);
+      const general = Q_STREAMS_ALL.slice(0, 15);
+      cont.innerHTML += `<div class="q-badge">Section A — Stream-Specific Questions (${stream})</div>`;
+      renderQuestions(cont, spec, 'spec');
+      cont.innerHTML += `<div class="q-section-title">Section B — General Aptitude & Interest</div>`;
+      cont.innerHTML += `<div class="q-badge">Covers all streams to find your best fit</div>`;
+      renderQuestions(cont, general, 'gen');
+    } else {
+      // Don't know — all 25 mixed questions
+      const mixed = Q_STREAMS_ALL.slice(0, 25);
+      cont.innerHTML += `<div class="q-badge">Mixed Questions — All Streams</div>`;
+      renderQuestions(cont, mixed, 'mixed');
+    }
+  } else {
+    // HSC — 15 stream questions + 10 graduation/professional specific
+    const stream = DATA.stream12;
+    const streamQs = (Q_12TH_STREAM[stream] || []).slice(0, 15);
+    cont.innerHTML += `<div class="q-badge">Section A — Post-12th Stream Questions (${stream})</div>`;
+    renderQuestions(cont, streamQs, 'hstr');
+    // 10 general questions from all streams (career comparison)
+    const genQs = Q_STREAMS_ALL.slice(5, 15);
+    cont.innerHTML += `<div class="q-section-title">Section B — Career Aptitude Comparison</div>`;
+    cont.innerHTML += `<div class="q-badge">Helps compare and confirm your career direction</div>`;
+    renderQuestions(cont, genQs, 'hgen');
+  }
+}
+
+function renderQuestions(cont, questions, prefix) {
+  questions.forEach((q, idx) => {
+    const div = document.createElement('div');
+    div.className = 'question-card';
+    div.id = 'qcard-' + prefix + idx;
+    const optsHTML = q.opts.map(o =>
+      `<div class="q-option" onclick="selectAnswer('${prefix + idx}', this, '${escStr(o)}', '${escStr(q.id)}', '${escStr(q.stream_map ? (q.stream_map[o] || '') : '')}')">
+        <div class="q-option-dot"></div>${o}
+      </div>`
+    ).join('');
+    div.innerHTML = `<div class="q-number">Question ${idx+1}</div><div class="q-text">${q.text}</div><div class="q-options">${optsHTML}</div>`;
+    cont.appendChild(div);
+  });
+}
+
+function escStr(s) { return (s || '').replace(/'/g, "\\'").replace(/"/g, "&quot;"); }
+
+function selectAnswer(key, el, answer, qid, category) {
+  el.closest('.q-options').querySelectorAll('.q-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  el.closest('.q-option-dot');
+  el.querySelector('.q-option-dot').style.background = 'var(--gold)';
+  el.closest('.q-options').querySelectorAll('.q-option:not(.selected) .q-option-dot').forEach(d => d.style.background = '');
+  selectedAnswers[key] = { answer, qid, category };
+  el.closest('.question-card').classList.add('answered');
+}
+
+// ============================================================
+// SUBMIT
+// ============================================================
+let unlockClickCount = 0;
+let reportGenerated = false;
+let sheetSaveUrl = '';
+
+function submitTest() {
+  const totalCards = document.querySelectorAll('#questions-container .question-card').length;
+  const answered = Object.keys(selectedAnswers).length;
+  if (answered < totalCards) {
+    const unanswered = totalCards - answered;
+    if (!window.confirm(`You have ${unanswered} unanswered question(s). Do you still want to proceed?`)) return;
+  }
+  DATA.answers = Object.values(selectedAnswers);
+  unlockClickCount = 0;
+  reportGenerated = false;
+
+  // Go to result page (unlock gate shows)
+  goToPage('result');
+
+  // Set unlock gate student name
+  const nameEl = document.getElementById('unlock-name-title');
+  if (nameEl) nameEl.textContent = 'Well done, ' + DATA.name + '!';
+
+  // Start building report in background silently
+  setTimeout(() => {
+    buildReportInBackground();
+  }, 300);
+
+  // Save student info to Google Sheet immediately
+  saveStudentToSheet();
+}
+
+function handleUnlockClick() {
+  unlockClickCount++;
+  const messages = ['', '2 more clicks to go!', '1 more click to go!', 'Unlocking your result…'];
+  const statusEl = document.getElementById('unlock-status');
+  if (statusEl) statusEl.textContent = messages[unlockClickCount] || '';
+
+  // Light up circles
+  ['lc1','lc2','lc3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (i < unlockClickCount) {
+      el.classList.add('done');
+      el.innerHTML = '✓';
+    }
+  });
+
+  if (unlockClickCount >= 3) {
+    const btn = document.getElementById('unlock-btn');
+    if (btn) { btn.disabled = true; btn.textContent = '✅ Unlocked!'; }
+    setTimeout(() => {
+      document.getElementById('unlock-gate').style.display = 'none';
+      document.getElementById('report-content').style.display = 'block';
+      // If report ready, show it; else show loader
+      if (!reportGenerated) {
+        generateReport();
+      }
+    }, 600);
+  }
+}
+
+let _bgReportBody = null;
+
+function buildReportInBackground() {
+  // Pre-calculate everything so it's instant when shown
+  // Just mark ready; actual DOM render happens on reveal
+  reportGenerated = false; // will be set true by renderReportHTML
+}
+
+// ============================================================
+// GOOGLE SHEETS INTEGRATION
+// ============================================================
+// ⚙️ SETUP: Replace the URL below with your deployed Google Apps Script Web App URL
+// See the attached Apps Script file for setup instructions
+const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+
+async function saveStudentToSheet() {
+  const sheetStatus = document.getElementById('sheet-status');
+  const sheetIcon = document.getElementById('sheet-icon');
+  const sheetMsg = document.getElementById('sheet-msg');
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    if (sheetIcon) sheetIcon.textContent = '⚠️';
+    if (sheetMsg) sheetMsg.textContent = 'Apps Script URL not configured. Student info not saved.';
+    return;
+  }
+
+  try {
+    const payload = {
+      name: DATA.name,
+      contact: DATA.contact,
+      parents: DATA.parents,
+      email: DATA.email,
+      qualification: DATA.qualification,
+      school: DATA.school,
+      board: DATA.board,
+      stream: DATA.qualification === 'HSC' ? DATA.stream12 : DATA.stream10_decided,
+      graduation: DATA.graduation_choice,
+      professional: DATA.professional_choice,
+      pct: DATA.pct,
+      date: new Date().toLocaleDateString('en-IN')
+    };
+
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+    const result = await res.json();
+
+    if (result.success) {
+      sheetSaveUrl = result.url || '';
+      if (sheetIcon) sheetIcon.textContent = '✅';
+      if (sheetMsg) sheetMsg.innerHTML = 'Details saved! Report link stored in counsellor\'s sheet.' +
+        (sheetSaveUrl ? ` <a href="${sheetSaveUrl}" target="_blank" style="color:var(--gold);font-weight:600">View Report Link</a>` : '');
+    } else {
+      throw new Error(result.error || 'Save failed');
+    }
+  } catch (e) {
+    if (sheetIcon) sheetIcon.textContent = '❌';
+    if (sheetMsg) sheetMsg.textContent = 'Could not save to sheet: ' + e.message;
+  }
+}
+
+async function saveReportLinkToSheet(reportHTML) {
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') return;
+  try {
+    const payload = {
+      action: 'updateReportLink',
+      name: DATA.name,
+      contact: DATA.contact,
+      reportHTML: reportHTML
+    };
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { console.log('Report link save error:', e.message); }
+}
+
+// ============================================================
+// RESULT GENERATION
+// ============================================================
+// ============================================================
+// CAREER DATABASE (Rule-Based — No API Required)
+// ============================================================
+const CAREER_DB = {
+  'B.Tech / B.E. (Engineering)': {
+    stream: 'Science PCM',
+    desc: 'Bachelor of Technology / Bachelor of Engineering is a 4-year undergraduate programme focusing on applied science and engineering principles. It is one of the most sought-after professional degrees in India, opening doors to technology, infrastructure, research, and management roles.',
+    steps: ['Complete 12th Science (PCM) with minimum 60–75% depending on college','Appear for JEE Main (National), MHT-CET (Maharashtra), or BITSAT (for BITS)','Get admission through centralised counselling (JoSAA / CAP Rounds)','Complete 4 years of B.Tech with internships and projects','Optional: GATE exam for M.Tech or PSU jobs | CAT/GMAT for MBA | Campus placement'],
+    subjects: ['Engineering Mathematics, Physics, Chemistry (1st year core)','Branch-specific subjects (e.g., Data Structures & Algorithms for CS, Structural Analysis for Civil)','Lab practicals, mini-projects, major project (final year)','Elective subjects based on specialisation'],
+    skills: ['Strong Mathematics & Logical Reasoning','Programming (especially for CS/IT)','Problem-solving & Analytical Thinking','Communication & Teamwork'],
+    colleges_mumbai: ['IIT Bombay (Powai) – India\'s premier engineering institution','VJTI Mumbai (Veermata Jijabai Technological Institute)','SPCE Mumbai (Sardar Patel College of Engineering)','Thadomal Shahani Engineering College','DJ Sanghvi College of Engineering (Vile Parle)'],
+    colleges_outside: ['IIT Delhi, IIT Madras, IIT Kharagpur','NIT Trichy, NIT Surathkal, NIT Warangal','BITS Pilani (Rajasthan)','VIT Vellore (Tamil Nadu)','Manipal Institute of Technology (Karnataka)'],
+    best_colleges: ['IIT Bombay – Top NIRF rank, 100% placement, world-class research labs','IIT Delhi – Excellent for CS, Electrical, Mechanical; strong industry connect','NIT Trichy – Best NIT overall, excellent placements and alumni network'],
+    jobs: ['Software Engineer / Developer','Data Scientist / AI Engineer','Mechanical / Civil / Electrical Engineer','Product Manager','DevOps / Cloud Engineer','Systems Analyst','Research & Development Engineer','Consultant (IT / Management)','Embedded Systems Engineer','Entrepreneur / Startup Founder'],
+    sectors: ['IT & Software (TCS, Infosys, Wipro, Google, Microsoft)','Core Engineering (L&T, BHEL, NTPC)','Defence & Space (ISRO, DRDO)','Banking & Finance (technology roles)','E-commerce (Amazon, Flipkart)','Startups & Product Companies'],
+    govt: ['UPSC Engineering Services Exam (IES)','PSU jobs via GATE (ONGC, BHEL, NTPC, IOCL)','ISRO / DRDO / BARC recruitment','Railways Technical Posts'],
+    salary_entry: '₹3.5 – ₹8 LPA (freshers at mid-tier companies)',
+    salary_mid: '₹10 – ₹25 LPA (3–5 years experience)',
+    salary_senior: '₹30 – ₹60 LPA (10+ years, senior roles)',
+    salary_top: '₹60 LPA – ₹1.5 Cr+ (FAANG companies, startups with ESOPs)',
+    salary_freelance: '₹5 – ₹50 LPA (freelance consulting, software projects, international clients)',
+    cities_india: ['Bengaluru (IT capital of India)','Hyderabad (major IT hub)','Pune (tech + manufacturing)','Mumbai (finance-tech, startups)','Chennai (IT + automobile)','Delhi/NCR (Gurgaon – MNCs)'],
+    cities_global: ['USA (Silicon Valley, NYC)','Canada (Toronto, Vancouver)','Germany (engineering roles)','Australia, Singapore, UAE'],
+    limitations: ['Highly competitive — lakhs appear for JEE each year','Core engineering jobs (non-IT) can have lower starting salaries','Requires continuous upskilling as technology evolves rapidly','Branch and college matter a lot for placement outcomes','Not suitable for those who dislike Mathematics or structured study'],
+    future: ['AI, Machine Learning, and Data Science roles growing 40% year-on-year','Cloud Computing and Cybersecurity are booming sectors','Electric Vehicles and Green Energy will create new engineering roles','India\'s IT export target of $500 billion by 2030 means massive job growth','Web3, Robotics, Space Tech are emerging areas with high demand'],
+    skills_to_build: ['DSA (Data Structures & Algorithms) – essential for tech placements','Python, Java, or C++ programming','Cloud platforms: AWS, Azure, Google Cloud','Git, Linux, Docker basics','Communication, Presentation, and Leadership skills','Certifications: Google Cloud, AWS, Coursera Specialisations'],
+    fees_mumbai: '₹1.5 – ₹6 Lakhs total (Government colleges like VJTI, SPCE); ₹8 – ₹16 Lakhs (private)',
+    fees_outside: '₹2 – ₹10 Lakhs (NITs / central institutions); ₹10 – ₹20 Lakhs (private colleges)',
+    fees_iit: '₹8 – ₹10 Lakhs total for 4 years (IITs, very affordable for quality offered)',
+    hostel: '₹60,000 – ₹1.5 Lakhs per year for hostel + mess',
+    loan: 'Education loans available up to ₹20–50 Lakhs via SBI, Bank of Baroda; IIT/NIT students get easy loans',
+    advice: ['Focus on JEE Main first — even a good NIT opens incredible doors','Don\'t choose branch only by salary trend; pick what genuinely interests you','Internships in 2nd and 3rd year are as important as marks','Build a GitHub profile and personal projects — it matters more than your CGPA in tech','Start competitive programming early on platforms like Codeforces, LeetCode'],
+  },
+
+  'MBBS (Medicine)': {
+    stream: 'Science PCB',
+    desc: 'MBBS (Bachelor of Medicine and Bachelor of Surgery) is a 5.5-year undergraduate medical degree (4.5 years study + 1 year compulsory rotating internship). It is the most prestigious and socially respected professional course in India, preparing students to become licensed medical doctors.',
+    steps: ['Complete 12th Science (PCB) with minimum 50% (60% for general category)','Qualify NEET-UG (National Eligibility cum Entrance Test — conducted by NTA)','Get admission through MCC counselling (government seats) or state quota','Complete 4.5 years MBBS + 1 year internship','Register with Medical Council; optionally pursue PG (MD/MS) via NEET-PG','3-year MD/MS specialisation for becoming a specialist'],
+    subjects: ['Pre-clinical: Anatomy, Physiology, Biochemistry','Para-clinical: Pathology, Pharmacology, Microbiology, Forensic Medicine','Clinical: Medicine, Surgery, Obstetrics & Gynaecology, Paediatrics, Ophthalmology, ENT, Orthopaedics, Psychiatry','1-year hospital internship rotating across all departments'],
+    skills: ['Strong memory and scientific reasoning','Empathy and emotional resilience','Observation and clinical judgement','Communication with patients and families','Physical and mental stamina for long shifts'],
+    colleges_mumbai: ['Seth GS Medical College & KEM Hospital (Parel)','Grant Medical College & Sir JJ Hospital (Byculla)','Lokmanya Tilak Municipal Medical College (Sion)','TN Medical College & BYL Nair Hospital (Mumbai Central)','BJ Wadia Hospital / Wadia College (Parel – paediatrics)'],
+    colleges_outside: ['AIIMS New Delhi – India\'s #1 medical college','JIPMER Puducherry – Government, excellent clinical training','Maulana Azad Medical College, Delhi','Christian Medical College (CMC), Vellore – Tamil Nadu','Kasturba Medical College, Manipal'],
+    best_colleges: ['AIIMS New Delhi – National top rank, lowest fees, best infrastructure globally','Seth GS Medical College Mumbai – Oldest and most reputed in Maharashtra, attached to KEM Hospital','CMC Vellore – Known for compassionate care, Christian values, and exceptional training'],
+    jobs: ['General Physician / Family Doctor','Specialist Doctor (Cardiologist, Neurologist, Orthopaedic, etc.)','Surgeon (General, Cardiac, Plastic, Neuro)','Medical Officer (Government hospitals)','Hospital Administrator / Medical Director','Medical Researcher / Clinical Trials','Public Health Officer','Medical Professor / Teacher','Armed Forces Medical Corps (MO)','Telemedicine / Digital Health Doctor'],
+    sectors: ['Government hospitals and PHCs','Private hospitals (Apollo, Fortis, Wockhardt, Kokilaben)','Research institutions (ICMR, AIIMS, Tata Memorial)','NGOs and public health organisations','Defence Medical Services','Pharmaceutical companies (medical advisors)'],
+    govt: ['UPSC Combined Medical Services (CMS)','State Public Service Commission Medical Officer posts','ESIC & CGHS doctors','Railway Medical Service','Armed Forces Medical Corps (Short Service Commission)'],
+    salary_entry: '₹50,000 – ₹80,000/month as house officer / junior resident',
+    salary_mid: '₹1.5 – ₹3 LPM (₹18–36 LPA) as specialist after MD/MS',
+    salary_senior: '₹5 – ₹15 LPM as senior consultant / HOD in private hospitals',
+    salary_top: '₹20–50 LPM for super-specialists (DM Cardiology, MCh Neurosurgery) in premium hospitals',
+    salary_freelance: 'Own clinic: ₹3–20 LPM depending on location and specialisation',
+    cities_india: ['Mumbai (Highest paying private hospitals)','Delhi/NCR (AIIMS belt, max private hospitals)','Chennai, Hyderabad (Medical tourism hubs)','Pune, Bengaluru (Growing healthcare sector)','Tier-2 cities — huge shortage of doctors, great opportunity'],
+    cities_global: ['USA (USMLE Steps 1,2,3 required — high-paying)','UK (PLAB exam — NHS jobs)','Australia (AMC exam)','Gulf countries (UAE, Saudi — good packages)','Canada (MCCQE exam)'],
+    limitations: ['9–15 years of study to become a specialist — very long commitment','NEET is extremely competitive (20 lakh+ applicants for ~1 lakh seats)','Government college fees are low (₹10,000–50,000/year) but private MBBS can cost ₹50 Lakhs–₹1 Crore','High emotional and physical stress — long shifts, difficult cases','Doctor shortage means overwork in government sector'],
+    future: ['India needs 600,000 more doctors by 2030 — massive opportunity','Telemedicine and AI-assisted diagnosis is the future of healthcare','New medical colleges being established across India by government','Ageing population globally will increase demand for specialists','Preventive healthcare and wellness is a growing sector'],
+    skills_to_build: ['NEET preparation: NCERT Biology, Chemistry, Physics (11th & 12th)','Clinical reasoning and case analysis','First Aid and CPR certification','Research paper writing','Digital health literacy — EHR, telemedicine platforms','Soft skills: empathy, patient counselling, communication'],
+    fees_mumbai: '₹50,000 – ₹1 Lakh/year (Government medical colleges like KEM, Nair) | Private: ₹8–15 Lakhs/year (₹40–80 Lakhs total)',
+    fees_outside: 'AIIMS / JIPMER: ₹5,000 – ₹15,000/year (central government — almost free!) | State private colleges: ₹5–15 Lakhs/year',
+    hostel: '₹30,000 – ₹80,000/year in government college hostels; more in private',
+    loan: 'SBI Scholar Loan up to ₹40 Lakhs; Vidya Lakshmi Portal; most banks support MBBS loans easily',
+    advice: ['Start NEET preparation from Class 11 itself — it covers 11th + 12th PCB syllabus entirely','NCERT is your Bible for NEET — read it at least 3–4 times','Score above 600/720 in NEET for a good government college','Shadowing a doctor during your school holidays will give you real clarity about this path','If NEET doesn\'t work the first time, one drop year with full focus is perfectly acceptable'],
+  },
+
+  'B.Com (General / Hons)': {
+    stream: 'Commerce',
+    desc: 'Bachelor of Commerce is a 3-year undergraduate degree covering accounting, finance, taxation, economics, and business management. It is the most popular commerce graduation in India and serves as the foundation for CA, MBA, CS, and government finance roles.',
+    steps: ['Complete 12th Commerce with minimum 45–60% (varies by college)','Apply through Mumbai University / DU / other university admissions (many are merit-based, no entrance exam)','B.Com is 3 years (6 semesters) — focus on Accountancy, Finance, Economics subjects','Register for CA Foundation alongside B.Com if aiming for CA','Post-graduation options: M.Com, MBA, CA Final, CS Executive, CFA, etc.'],
+    subjects: ['Financial Accounting & Corporate Accounting','Business Economics & Business Mathematics','Taxation (Direct & Indirect Tax, GST)','Auditing & Cost Accounting','Business Law, Company Law','Banking & Financial Services','Computer Applications in Business'],
+    skills: ['Numerical accuracy and financial analysis','Understanding of tax laws and regulations','MS Excel and accounting software (Tally ERP, SAP)','Communication and presentation skills','Analytical and problem-solving mindset'],
+    colleges_mumbai: ['H.R. College of Commerce & Economics (Churchgate) – Top ranked','Jai Hind College (Churchgate)','K.J. Somaiya College of Arts and Commerce (Vidyavihar)','Mithibai College of Arts (Vile Parle)','Narsee Monjee College of Commerce (Vile Parle)'],
+    colleges_outside: ['Shri Ram College of Commerce (SRCC) – Delhi – India\'s #1 commerce college','Lady Shri Ram College (Delhi University)','Loyola College, Chennai','Christ University, Bengaluru','Presidency College, Kolkata'],
+    best_colleges: ['SRCC Delhi – Consistently ranked #1 for B.Com, exceptional alumni network, top placements','H.R. College Mumbai – Maharashtra\'s best, excellent faculty, strong CA foundation guidance','Christ University Bengaluru – Good for B.Com Hons, international exposure, modern curriculum'],
+    jobs: ['Chartered Accountant (after CA exams)','Tax Consultant / GST Practitioner','Financial Analyst','Accounts Manager / CFO','Bank Officer (PO, Clerk)','Cost Accountant (CMA)','Investment Banker','Company Secretary','Budget Analyst','Entrepreneur / Business Owner'],
+    sectors: ['Banking & Financial Services (HDFC, ICICI, SBI, Kotak)','Big 4 Accounting Firms (Deloitte, KPMG, PwC, EY)','Corporate Finance (all industries need finance teams)','Government (Income Tax, Revenue, Finance Departments)','Stock Broking & Wealth Management','Insurance sector (LIC, HDFC Life, ICICI Prudential)'],
+    govt: ['UPSC – Indian Revenue Service (IRS) for taxation','State Finance Service exams','SBI PO / IBPS PO Bank exams','Income Tax Officer / CBI (Financial Crime)','State Accountant General offices'],
+    salary_entry: '₹2.5 – ₹5 LPA (fresher accountant, junior analyst)',
+    salary_mid: '₹8 – ₹18 LPA (CA, MBA-Finance, 5 years experience)',
+    salary_senior: '₹20 – ₹50 LPA (CFO, Finance Director, Big 4 Manager)',
+    salary_top: '₹50 LPA – ₹1 Cr+ (Investment banking, startup CFO, CXO level)',
+    salary_freelance: '₹3 – ₹20 LPA (freelance tax consultant, GST practitioner, financial advisor)',
+    cities_india: ['Mumbai – Financial capital, highest paying finance jobs','Delhi/NCR (Gurgaon) – Corporate sector, Big 4 offices','Bengaluru – IT company finance + startup ecosystem','Pune, Hyderabad, Chennai – Growing corporate hubs','Any city for government finance roles'],
+    cities_global: ['USA (CPA certification – finance jobs)','UK (ACCA qualification)','UAE/Gulf (CA + MBA highly valued, tax-free salary)','Singapore, Hong Kong (International finance hubs)','Canada, Australia – Good for Indian CAs'],
+    limitations: ['B.Com degree alone has limited scope — additional qualification (CA, MBA, CS) is almost mandatory for high salary','CA is extremely tough — only 5–10% clear all 3 levels on first attempt','The path to senior positions is long without an MBA from a top institute','Commerce students are often overlooked for tech jobs unless they upskill','Accountancy jobs can be routine unless you move into strategic finance'],
+    future: ['GST implementation has created huge demand for tax professionals','Fintech is disrupting traditional banking — digital finance skills are critical','CAs with tech background (data analytics) are in high demand','India\'s growing startup ecosystem needs CFOs and financial advisors','Increasing FDI and MNC operations in India = more finance jobs'],
+    skills_to_build: ['Tally ERP 9, Tally Prime (accounting software)','MS Excel – VLOOKUP, Pivot Tables, Financial Modelling','CA Foundation: Accounting, Maths, Economics, Law','CFA Level 1 for finance careers (can start early)','Python for Finance / Data Analytics','Soft skills: negotiation, presentation, client handling'],
+    fees_mumbai: '₹8,000 – ₹25,000/year (Mumbai University affiliated government/aided colleges) | Private: ₹50,000 – ₹1.2 Lakhs/year',
+    fees_outside: 'SRCC Delhi: ₹15,000–25,000/year (government) | Private autonomous colleges: ₹60,000 – ₹2 Lakhs/year',
+    hostel: '₹50,000 – ₹1.2 Lakhs/year depending on city and type',
+    loan: 'Education loans available but often not required for B.Com — fees are low; CA coaching loans available separately',
+    advice: ['Don\'t do "just B.Com" — register for CA Foundation in Class 12 itself and start simultaneously','Focus on clearing CA Foundation before or during your first year of B.Com','Excel skills are non-negotiable in 2024 — learn them on your own from YouTube','Internship at a CA firm during B.Com will give you real-world exposure that marks cannot','Build a reputation for accuracy and reliability — these are the two traits finance professionals swear by'],
+  },
+
+  'BA (various specialisations)': {
+    stream: 'Arts/Humanities',
+    desc: 'Bachelor of Arts is a 3-year undergraduate degree offering specialisations across History, Political Science, Sociology, Psychology, Economics, English Literature, Languages, Philosophy, Geography, and more. BA provides a broad, analytical, and humanistic education and opens doors to diverse careers in government, law, media, education, and social work.',
+    steps: ['Complete 12th with minimum 45% (arts, science, or commerce students can apply)','Apply through college admissions — most are merit-based or university CET-based','BA is 3 years (6 semesters), choose your major/specialisation carefully','Post-graduation: MA, LLB, MBA, MSW, B.Ed, Mass Communication, UPSC preparation','For government roles: start UPSC/MPSC preparation from 2nd year itself'],
+    subjects: ['Major subject (e.g., History, Political Science, Sociology, Psychology, English)','Elective subjects','Language papers','Foundation Course / Environmental Studies','Optional vocational subjects'],
+    skills: ['Critical thinking and argumentation','Research and writing ability','Empathy and social awareness','Communication and public speaking','Cultural and historical understanding'],
+    colleges_mumbai: ['St. Xavier\'s College (Fort) – Top arts college in Mumbai','Elphinstone College (Fort) – Prestigious, affordable, excellent faculty','Sophia College for Women (Breach Candy)','Mithibai College of Arts, Science and Commerce (Vile Parle)','Ruia College (Matunga)'],
+    colleges_outside: ['Lady Shri Ram College (Delhi) – India\'s #1 for BA','Miranda House, Delhi University','Presidency College, Kolkata / Chennai','Christ University, Bengaluru','Fergusson College, Pune'],
+    best_colleges: ['Lady Shri Ram College Delhi – Best women\'s college for BA, exceptional academic environment','St. Xavier\'s College Mumbai – Best in Maharashtra, Jesuit tradition, diverse student body','Presidency College Kolkata – Oldest and most prestigious in Eastern India, strong academic legacy'],
+    jobs: ['IAS / IPS / IFS Officer (via UPSC Civil Services)','Lawyer / Legal Advisor (after LLB)','Journalist / News Anchor / Content Writer','Psychologist / Counsellor','Social Worker / NGO Manager','Teacher / Professor','HR Manager (after MBA)','Diplomat / Foreign Service Officer','Policy Analyst / Think Tank Researcher','Author / Scriptwriter / Creative Professional'],
+    sectors: ['Government service (most BA graduates target UPSC/MPSC)','Media & Journalism (print, digital, television)','Education (schools, colleges, coaching)','NGO and development sector','Law and legal services','Corporate (HR, PR, communications roles)','International organisations (UN, WHO, UNESCO)'],
+    govt: ['UPSC Civil Services (IAS/IPS/IFS) — most prestigious','State PSC (MPSC Maharashtra, KPSC, etc.)','Staff Selection Commission (SSC CGL, CHSL)','Bank PO / Clerk (IBPS, SBI)','Teaching services (TET, CTET, NET/SET)'],
+    salary_entry: '₹2 – ₹4.5 LPA (entry-level media, NGO, teaching) | Government: ₹5–9 LPA (if selected in SSC CGL, bank PO)',
+    salary_mid: '₹6 – ₹15 LPA (journalism, corporate comms, experienced teacher) | IAS: ₹12–18 LPA + perks & allowances',
+    salary_senior: '₹15 – ₹40 LPA (senior journalist, HR director, IAS joint secretary level)',
+    salary_top: '₹50 LPA+ (senior lawyer, national media editor, IAS DG/Secretary level)',
+    salary_freelance: '₹2 – ₹15 LPA (freelance writer, content creator, consultant)',
+    cities_india: ['Delhi – Government, media, NGOs, law','Mumbai – Media, entertainment, corporate HR','Bengaluru – Startups, NGOs, tech company HR','Kolkata, Chennai, Hyderabad – Government + academic roles','Any city – Government jobs through UPSC/State PSC'],
+    cities_global: ['UK (MA, Law, journalism — top global universities)','USA (Political Science, International Relations, Law Schools)','UN agencies globally (Geneva, New York, Vienna)','France, Germany (cultural/language specialisations)','Australia, Canada – Good for social work, counselling careers'],
+    limitations: ['Private sector salary is lower than engineering/commerce at entry level','UPSC is the most competitive exam in India — only 1,000 selected from 10 lakh+ aspirants each year','BA degree without a competitive exam or postgraduate degree has limited scope','Stigma in India around arts — parents and society often undervalue this path','Requires strong self-motivation as the career path is less defined'],
+    future: ['UPSC reforms are making the exam more accessible and transparent','Media is evolving rapidly — digital content creation is booming','Psychology and mental health awareness is growing — counsellors in huge demand','Social impact careers (NGOs, CSR) are getting better funded and respected','Policy research and think tanks are growing in India\'s evolving democracy'],
+    skills_to_build: ['UPSC preparation: NCERT books from Class 6–12 (History, Geography, Polity, Economy)','Writing skills — practice essay writing and editorial analysis daily','Public speaking: join debate, MUN, theatre groups','Research methodology for postgraduate studies','Digital skills: social media, content creation, data for social sciences','Language skills — Hindi + regional language + English is a powerful combination'],
+    fees_mumbai: '₹5,000 – ₹20,000/year (government/aided Mumbai University colleges) | Private: ₹30,000 – ₹1 Lakh/year',
+    fees_outside: 'Delhi University: ₹10,000 – ₹25,000/year (very affordable) | Private autonomous: ₹50,000 – ₹1.5 Lakhs/year',
+    hostel: '₹40,000 – ₹1 Lakh/year depending on city',
+    loan: 'Low fees mean education loans rarely needed for BA; but available for postgraduate programmes',
+    advice: ['Choose your BA specialisation with intention — Psychology, Political Science, Economics are very versatile','Start UPSC/MPSC preparation from 2nd year — it is a long journey and early start matters','Read newspapers (The Hindu, Indian Express) every day — it is both preparation and professional development','Don\'t let anyone make you feel your stream is inferior — India\'s top leaders, journalists, and social workers studied Arts','Pair your BA with a professional certification — Mass Communication, Psychology diploma, Law — to strengthen career prospects'],
+  },
+
+  'BBA / BMS / BBI': {
+    stream: 'Commerce',
+    desc: 'BBA (Bachelor of Business Administration), BMS (Bachelor of Management Studies), and BBI (Bachelor of Banking and Insurance) are 3-year professional undergraduate commerce degrees focused on management, business strategy, and functional areas of business. They are considered superior to plain B.Com for management careers and serve as an excellent stepping stone to MBA.',
+    steps: ['Complete 12th Commerce (or Science) with minimum 50–60%','Appear for entrance exams: DU JAT (Delhi), MH-CET (Maharashtra), IPMAT (IIM Indore/Rohtak for 5-year IPM)','Get admission to your preferred college','BBA/BMS is 3 years (6 semesters)','Pursue MBA after 1–2 years of work experience OR directly enter corporate life','Consider CA, CFA, or digital marketing certifications alongside'],
+    subjects: ['Principles of Management & Organisational Behaviour','Marketing Management & Consumer Behaviour','Financial Management & Business Finance','Human Resources Management','Business Statistics & Operations Research','Entrepreneurship Development','International Business & Export-Import Management','Business Law & Ethics'],
+    skills: ['Leadership and team management','Business communication','Market analysis and strategic thinking','Financial planning basics','Presentation and negotiation skills'],
+    colleges_mumbai: ['Narsee Monjee Institute of Management Studies (Juhu) – Top BMS/MBA college','K.J. Somaiya College of Arts and Commerce (BMS)','St. Xavier\'s College – BMS programme','HR College of Commerce – BMS','SIES College of Arts, Science and Commerce (BMS)'],
+    colleges_outside: ['Shaheed Sukhdev College of Business Studies, Delhi (BBS) – India\'s #1','NMIMS Mumbai / Hyderabad / Bengaluru','Symbiosis Centre for Management Studies (Pune)','Christ University Bengaluru (BBA)','Amity University Noida (BBA)'],
+    best_colleges: ['Shaheed Sukhdev CBS Delhi – Only college with BBS, exceptional placements, ₹8+ LPA average','NMIMS Mumbai – Prestigious, excellent MBA linkage, strong industry connect','Symbiosis Pune – Known for international exposure, global business curriculum'],
+    jobs: ['Marketing Executive / Brand Manager','Business Development Manager','HR Executive / Talent Acquisition','Operations Manager','Financial Analyst','Retail Manager','Entrepreneur / Startup Founder','Management Consultant','Sales Manager','Digital Marketing Specialist'],
+    sectors: ['FMCG companies (HUL, Nestlé, P&G)','Banking and financial services','E-commerce and retail (Amazon, Flipkart, Myntra)','Management consulting (McKinsey, BCG — after MBA)','Advertising and media','IT companies (non-technical business roles)','Startups and entrepreneurship'],
+    govt: ['Bank PO / SO (IBPS, SBI)','SSC CGL (Assistant Section Officer)','UPSC (management background helps in Group A services)'],
+    salary_entry: '₹3 – ₹6 LPA (fresher marketing, operations, HR roles)',
+    salary_mid: '₹8 – ₹20 LPA (after MBA from good institute, 3–5 years)',
+    salary_senior: '₹25 – ₹60 LPA (Senior Manager, Director level in MNCs)',
+    salary_top: '₹60 LPA – ₹1.5 Cr (C-suite, IIM MBA graduate in FMCG/consulting)',
+    salary_freelance: '₹4 – ₹20 LPA (business consultant, digital marketing freelancer)',
+    cities_india: ['Mumbai, Delhi/NCR – Corporate headquarters','Bengaluru – Startups + tech company business roles','Pune – MNCs and manufacturing companies','Hyderabad, Chennai – Growing corporate hubs'],
+    cities_global: ['USA (MBA from IVY League / top US schools)','UK (Warwick, LSE, LBS business schools)','Singapore, UAE – Business management highly valued','Germany, Canada – MBA + business analytics roles'],
+    limitations: ['BBA/BMS alone without MBA from a top institute limits salary growth','Too many BBA graduates diluting the market — college brand matters a lot','First 2 years after graduation can feel stagnant before MBA','CAT for top MBA is extremely competitive — IIM calls require 99+ percentile','Business roles require strong EQ and people skills which not everyone has'],
+    future: ['Digital business transformation is creating new BBA/MBA hybrid roles','Startup ecosystem in India is booming — entrepreneurship education is more relevant than ever','E-commerce, fintech, and edtech will drive business management hiring for next decade','MBA from IIM still commands premium; but good BBA + experience + niche skill also works','International business roles are growing with India\'s global trade expansion'],
+    skills_to_build: ['MS Excel, Power BI for data-driven business decisions','Digital Marketing: Google Ads, Meta Ads, SEO','CRM tools: Salesforce, Zoho','Public speaking and business presentation (join Toastmasters)','CAT preparation from 2nd year of BBA if MBA is the goal','Side project or internship in startup — practical exposure is priceless'],
+    fees_mumbai: '₹40,000 – ₹1.5 Lakhs/year (Mumbai University affiliated) | Private NMIMS: ₹2–3 Lakhs/year',
+    fees_outside: 'Delhi University BBS: ₹25,000–40,000/year (very affordable) | Symbiosis Pune: ₹2–3.5 Lakhs/year',
+    hostel: '₹60,000 – ₹1.5 Lakhs/year',
+    loan: 'Education loans readily available for BBA at private colleges',
+    advice: ['MBA is the real game-changer — BBA is a foundation, not the destination for most','Pick specialisations wisely — Marketing, Finance, or HR — and go deep during internships','Attend every business competition, hackathon, and case study contest you can','Build your LinkedIn profile from your 1st year — recruiters DO look at students early','Real entrepreneurs start their first small business while still in college — don\'t wait'],
+  },
+
+  'BMM (Mass Media)': {
+    stream: 'Arts/Humanities',
+    desc: 'Bachelor of Mass Media (BMM) is a 3-year undergraduate degree that trains students in journalism, advertising, public relations, filmmaking, digital media, and communication. It is ideal for creative, communicative individuals who want to influence society through storytelling and media.',
+    steps: ['Complete 12th (any stream) with minimum 50–60%','Apply via Mumbai University CET / direct admissions in other cities','BMM is 3 years with specialisation from 2nd year (Journalism, Advertising, PR, or Films)','Build portfolio while studying — internships, college magazine, YouTube, social media','Post-BMM: MA Mass Communication, Journalism PG, MBA in Media Management, or direct industry entry'],
+    subjects: ['Fundamentals of Communication & Media Studies','Print Journalism & Editorial Writing','Broadcast Journalism (Radio & Television)','Advertising & Brand Communication','Public Relations & Event Management','Digital Media & New Media Technologies','Film Appreciation & Film Making','Photography & Visual Communication','Research Methodology for Media'],
+    skills: ['Writing and storytelling ability','Visual communication and design sense','Social media management','Video editing and production','Interviewing and research skills','Creativity and adaptability'],
+    colleges_mumbai: ['Sophia Polytechnic (BMM) – Best in Mumbai for media','KC College (BMM) – Excellent faculty, industry connect','St. Xavier\'s College Mumbai (BMM)','Jai Hind College (BMM)','Mithibai College (BMM)'],
+    colleges_outside: ['Lady Shri Ram College Delhi (Journalism)','Asian College of Journalism, Chennai','Symbiosis Institute of Media & Communication, Pune','IIMC New Delhi (Post-graduate, top journalism institute)','AJK MCRC, Jamia Millia Islamia, Delhi'],
+    best_colleges: ['IIMC New Delhi (PG) – India\'s premier journalism institute; highly respected in newsrooms','Symbiosis Pune (BMM/SIMC) – Excellent corporate media training, strong placements','Sophia Polytechnic Mumbai – Best undergraduate BMM; exceptional alumni in Bollywood, journalism, advertising'],
+    jobs: ['Journalist / Reporter (print, TV, digital)','Content Writer / Copywriter','Social Media Manager','Advertising Account Executive','PR Executive / Public Relations Officer','Video Producer / Director','Scriptwriter / Screenwriter','Brand Strategist','Podcaster / Blogger / YouTuber','Film Production Executive'],
+    sectors: ['Media houses (Times of India, NDTV, Republic Bharat)','Advertising agencies (Ogilvy, JWT, McCann)','PR firms (Edelman, Weber Shandwick)','Digital media companies (YouTube, Vice, Netflix)','Corporate communications departments','OTT platforms (Netflix, Amazon Prime, ZEE5, SonyLIV)','Bollywood / Film & TV production houses'],
+    govt: ['All India Radio (AIR) – Journalist positions','Doordarshan – News anchor, correspondent','PIB (Press Information Bureau) – Media relations officer','UPSC (IIS – Indian Information Service)','State Information Departments'],
+    salary_entry: '₹2 – ₹4.5 LPA (junior journalist, content writer, PR executive)',
+    salary_mid: '₹6 – ₹15 LPA (senior journalist, creative director, digital marketing manager)',
+    salary_senior: '₹15 – ₹40 LPA (editor, agency director, senior PR strategist)',
+    salary_top: '₹40 LPA+ (newspaper editor, TV anchor, creative director at MNC agency)',
+    salary_freelance: '₹3 – ₹25 LPA (freelance writer, video creator, social media consultant)',
+    cities_india: ['Mumbai – Media capital, Bollywood, advertising','Delhi – Journalism, government PR, policy media','Bengaluru – Digital media, startup content marketing','Hyderabad – Film industry (Tollywood), digital media','Pune, Chennai – Advertising, PR, regional media'],
+    cities_global: ['UK (BBC, Reuters, Guardian — great journalism training)','USA (CNN, NYT, digital media companies)','UAE/Gulf – PR and corporate communications pay well','Australia, Canada – Open media markets for Indian journalists'],
+    limitations: ['Entry-level pay is low and can be discouraging','Journalism involves irregular hours, field reporting risks, and deadline pressure','Media industry is undergoing disruption — print media is shrinking','Digital content market is competitive — consistent quality and networking are essential','Career growth depends heavily on building a personal brand and portfolio'],
+    future: ['OTT content creation is booming — 40+ platforms in India creating content','Digital journalism is replacing print — data journalism and video journalism are the future','Branded content, influencer marketing, and native advertising are new revenue streams','Virtual reality, augmented reality, and AI-generated content are emerging areas','Short-form video (Instagram Reels, YouTube Shorts) is creating new creator careers'],
+    skills_to_build: ['Video editing: Adobe Premiere Pro, DaVinci Resolve','Graphic design: Canva, Adobe Photoshop/Illustrator','SEO and digital analytics: Google Analytics','Podcast creation and editing','Photography (DSLR + mobile photography)','Social media content strategy and scheduling tools'],
+    fees_mumbai: '₹15,000 – ₹50,000/year (Mumbai University aided colleges like KC, St. Xavier\'s) | Private: ₹80,000 – ₹2 Lakhs/year',
+    fees_outside: 'Symbiosis Pune: ₹2–3 Lakhs/year | Delhi University: ₹10,000–20,000/year (very affordable)',
+    hostel: '₹50,000 – ₹1.2 Lakhs/year',
+    loan: 'Available but usually not required for lower-fee colleges; practical equipment costs should be budgeted',
+    advice: ['Build your portfolio from Day 1 — start a blog, a YouTube channel, or contribute to the college magazine','Internships are absolutely essential in media — try to do at least 2–3 during your BMM','Network fearlessly — the media industry runs on who you know, not just what you know','Follow the news obsessively — a media professional who doesn\'t consume media is like a doctor who doesn\'t read medical journals','Don\'t just consume content — create, publish, and get feedback. Your portfolio is your degree in the real world'],
+  },
+
+  'LLB (Law)': {
+    stream: 'Arts/Humanities',
+    desc: 'LLB (Legum Baccalaureus / Bachelor of Laws) is a professional law degree in India, offered either as a 5-year integrated BA LLB / BBA LLB / B.Com LLB after Class 12, or as a 3-year LLB after graduation. It qualifies graduates to practise as advocates in courts or pursue legal careers in corporate, government, or academic sectors.',
+    steps: ['After 12th: Appear for CLAT (Common Law Admission Test) / AILET / Maharashtra CET (for Maharashtra law colleges)','Get admission to 5-year integrated LLB (NLU or private law colleges)','OR complete any graduation first, then apply for 3-year LLB','Complete law degree with specialisation (Criminal, Corporate, Cyber, IPR, Tax Law)','Enroll with Bar Council of India to become a practising Advocate','Optional: LLM (1-2 years) for specialisation or academic career | Judicial Services exam | UPSC'],
+    subjects: ['Constitutional Law, Administrative Law','Contract Law, Tort Law, Family Law','Criminal Law (IPC, CrPC, Evidence Act)','Corporate Law, Company Law, Securities Law','Intellectual Property Rights, Cyber Law','Environmental Law, International Law','Legal Writing, Mooting, Client Counselling','Taxation Law, Labour Law'],
+    skills: ['Logical reasoning and critical analysis','Research and legal writing','Oratory and argumentation','Attention to detail and procedural accuracy','Emotional intelligence and negotiation'],
+    colleges_mumbai: ['Government Law College (GLC) Mumbai – Most prestigious and historical (est. 1855)','ILS Law College (Pune – near Mumbai)','Pravin Gandhi College of Law','Kishinchand Chellaram Law College (KC Law)','University of Mumbai Law Academy'],
+    colleges_outside: ['NALSAR University of Law, Hyderabad – India\'s #1 NLU','National Law School of India University (NLSIU), Bengaluru – Ranked #1','NLU Delhi (Campus Law Centre)','NLU Jodhpur, NLU Bhopal (NLIU)','Symbiosis Law School, Pune'],
+    best_colleges: ['NLSIU Bengaluru – India\'s top law school, exceptional moot court training, top corporate law placements','NALSAR Hyderabad – Excellent human rights law, IPR, and corporate law programmes','NLU Delhi – Best for Delhi High Court exposure, government and policy law careers'],
+    jobs: ['Advocate / Litigation Lawyer','Corporate Lawyer / In-house Counsel','Legal Advisor to MNCs or Government','Judicial Officer / Magistrate','Public Prosecutor','Law Professor / Legal Academic','Arbitrator / Mediator','IPR Attorney / Patent Lawyer','Cyber Law Expert','Legal Journalist / Policy Analyst'],
+    sectors: ['Litigation (courts — High Courts, Supreme Court)','Corporate law firms (AZB & Partners, Cyril Amarchand Mangaldas)','MNC in-house legal departments','Government legal departments','International organisations (UN, WTO, ICJ)','Law schools and academic institutions','Legal tech companies'],
+    govt: ['Judicial Services – District Judge / Magistrate (via Judicial Services Exam)','UPSC – IRS (Indian Revenue Service) or UPSC Law Officer','Public Prosecutor (via state government)','Government Pleader','Legal Affairs Department, Ministries'],
+    salary_entry: '₹2.5 – ₹5 LPA (litigation junior, junior associate at firm)',
+    salary_mid: '₹8 – ₹20 LPA (associate at law firm, in-house counsel, 3–7 years)',
+    salary_senior: '₹25 – ₹60 LPA (Partner at law firm, Senior Counsel, Legal Director)',
+    salary_top: '₹1 Cr+ (Senior Advocate with Supreme Court practice, top corporate law partner)',
+    salary_freelance: '₹3 – ₹30 LPA (independent legal consultant, mediator, IPR practitioner)',
+    cities_india: ['Mumbai – Corporate law capital of India (Bombay High Court, top law firms)','Delhi – Supreme Court, government law, policy','Bengaluru – IT law, startup legal, IPR','Hyderabad, Pune – Growing corporate law markets'],
+    cities_global: ['UK (Bar Council of England & Wales, City of London law firms)','USA (LLM from Harvard, Columbia — opens global doors)','Singapore, UAE – International arbitration and corporate law','International Criminal Court, Hague – International law careers'],
+    limitations: ['Litigation income is very low for the first 5–7 years — requires patience and financial support','Bar Council enrollment and court practice is physically demanding with irregular income','Corporate law placements mostly go to NLU graduates — tier-2 college graduates need to work harder','Law is a relationship-intensive profession — networking and reputation take years to build','Long working hours, especially in corporate law firms during deal closures'],
+    future: ['Data privacy law (DPDPA India), Cyber Law, and AI regulation are booming new areas','India\'s ADR (Arbitration and Mediation) sector is growing rapidly','Start-up ecosystem legal needs are creating demand for commercial lawyers','India\'s Supreme Court digitalisation and e-filing will modernise the profession','International arbitration centres in Mumbai and Delhi are attracting global legal work'],
+    skills_to_build: ['CLAT: Logical Reasoning, English, GK, Legal Aptitude, Maths (for CLAT)','Moot Court participation — strongest skill-builder in law school','Legal research tools: Manupatra, SCC Online, Westlaw','Contract drafting and negotiation','Public speaking and structured argumentation','Excel for legal billing; basic understanding of accounting for corporate law'],
+    fees_mumbai: 'GLC Mumbai: ₹8,000–15,000/year (extremely affordable!) | Private law colleges: ₹50,000 – ₹2 Lakhs/year',
+    fees_outside: 'NLUs: ₹1.5 – ₹2.5 Lakhs/year (5-year programme total ₹7–12 Lakhs) | Private law universities: ₹2 – ₹5 Lakhs/year',
+    hostel: '₹60,000 – ₹1.2 Lakhs/year',
+    loan: 'Available from all major banks; NLU graduates easily get education loans',
+    advice: ['Choose carefully between litigation and corporate law — they are two very different lifestyles','Start mooting and debating in school itself — it is the single most useful preparation','Read judgements of the Supreme Court and Bombay High Court even before you join law school','Internship at a High Court lawyer\'s chamber or a corporate law firm is essential every summer','GLC Mumbai\'s alumni network is extraordinary — many of India\'s best lawyers and judges studied there'],
+  },
+
+  'BCA (Computer Applications)': {
+    stream: 'Science PCM',
+    desc: 'Bachelor of Computer Applications (BCA) is a 3-year undergraduate IT degree focused on programming, software development, networking, database management, and web technologies. It is an excellent choice for students who want to enter the software industry without pursuing a full B.Tech engineering degree.',
+    steps: ['Complete 12th (Science preferred, but commerce/arts can also apply at many colleges)','Admissions are usually direct or via entrance test','BCA is 3 years (6 semesters)','Focus on practical projects, internships, and building a portfolio','Post-BCA: MCA (2 years), MBA in IT, or direct placement; alternatively upskill for product companies'],
+    subjects: ['Programming: C, C++, Java, Python','Web Development: HTML, CSS, JavaScript, PHP','Database Management: MySQL, Oracle, MongoDB','Data Structures and Algorithms','Operating Systems and Computer Networks','Software Engineering and Project Management','Mathematics for Computing (Discrete Maths, Linear Algebra)'],
+    skills: ['Programming and debugging','Problem-solving with algorithms','Web and mobile app development','Database design and management','Teamwork and agile methodologies'],
+    colleges_mumbai: ['NMIMS School of Technology Management & Engineering','Thakur College of Science & Commerce (BCA)','Vivekanand Education Society\'s College (BCA)','Jai Hind College (BCA)','Pillai College of Arts, Commerce & Science (BCA)'],
+    colleges_outside: ['Symbiosis Institute of Computer Studies, Pune','Christ University Bengaluru (BCA)','Amity University Noida (BCA)','Presidency College Chennai (BCA)','JECRC, Jaipur (BCA)'],
+    best_colleges: ['NMIMS Mumbai – Strong industry connect, excellent placement cell','Christ University Bengaluru – Best private college for BCA; good infrastructure and teaching','Symbiosis Pune – Well-known brand, good for MCA feeder as well'],
+    jobs: ['Software Developer / Web Developer','App Developer (Android / iOS)','Database Administrator','System Analyst','Network Administrator','UI/UX Designer','Cybersecurity Analyst','Data Analyst','IT Support Engineer','Technical Recruiter'],
+    sectors: ['IT services companies (TCS, Infosys, Wipro, Cognizant)','Product companies (if skills are strong)','E-commerce (technology roles)','Banking IT departments','Healthcare IT','Government IT (NIC, e-governance projects)'],
+    govt: ['NIC (National Informatics Centre) recruitment','State IT departments','E-governance project contracts','NIELIT certifications for government IT roles'],
+    salary_entry: '₹2.5 – ₹5 LPA (fresher developer, IT support)',
+    salary_mid: '₹6 – ₹15 LPA (3–5 years with good skills)',
+    salary_senior: '₹15 – ₹35 LPA (senior developer, tech lead)',
+    salary_top: '₹35 LPA+ (if skills are at product company level — strong DSA + system design)',
+    salary_freelance: '₹3 – ₹20 LPA (freelance development, web design, app development)',
+    cities_india: ['Bengaluru, Hyderabad, Pune, Chennai – IT hubs','Mumbai – Fintech and startup tech roles','Delhi/NCR – IT services and government IT'],
+    cities_global: ['USA, Canada, Australia, Germany – Good for IT professionals','UAE – Tax-free IT salaries for app developers and system analysts'],
+    limitations: ['BCA is not equivalent to B.Tech for premium product companies like Google, Microsoft','Competitive coding skills (DSA, system design) are needed for tier-1 company placements','MCA adds significant value but is an extra 2 years of study','Technology changes fast — continuous learning is mandatory','College brand matters — a BCA from an unknown college is a disadvantage'],
+    future: ['AI, Cloud, and Cybersecurity are creating massive demand for IT professionals','India\'s $250 billion IT industry will continue to grow','Full-stack development, DevOps, and mobile app development are evergreen skills','India is building a digital public infrastructure that will need thousands of IT specialists','Remote work opportunities from global companies are now open to Indian BCA/MCA graduates'],
+    skills_to_build: ['DSA (LeetCode, HackerRank practice daily)','Full-stack: React.js + Node.js + MongoDB or Django/Flask','Cloud: AWS or Google Cloud Associate certification','Git, GitHub – version control is essential','Build real projects: deploy a live website, create an app — put on GitHub','Soft skills: communication, presentation, writing documentation'],
+    fees_mumbai: '₹30,000 – ₹80,000/year (most Mumbai colleges) | Private: ₹60,000 – ₹1.5 Lakhs/year',
+    fees_outside: 'Symbiosis: ₹1.5–2 Lakhs/year | Government colleges: ₹10,000–30,000/year',
+    hostel: '₹50,000 – ₹1 Lakh/year',
+    loan: 'Education loans available at all major banks; low fees make BCA affordable',
+    advice: ['Your GitHub profile is your real resume in the tech industry — start building projects now','Don\'t stop at the college syllabus — self-learn DSA, React, Cloud from YouTube, Udemy, Coursera','The gap between a ₹3 LPA and ₹10 LPA BCA/MCA job is purely skill — not just marks or college','Competitive programming on LeetCode/CodeChef from 1st year will open doors to good companies','Consider MCA after BCA — it aligns you closer to B.Tech in terms of industry perception'],
+  },
+
+  'default': {
+    stream: 'General',
+    desc: 'This is a professional undergraduate course that equips you with the knowledge and skills required for a successful career in your chosen field.',
+    steps: ['Complete the required qualification (10th/12th) with necessary percentage','Apply through the relevant admission process (entrance exam or merit-based)','Complete the undergraduate degree with internships and projects','Pursue post-graduation or professional certifications as needed','Apply for jobs or higher education as per your career goals'],
+    subjects: ['Core subject papers relevant to the discipline','Elective and specialisation subjects','Practical/lab work and projects','Foundation and skill development courses'],
+    skills: ['Domain knowledge and subject expertise','Communication and interpersonal skills','Critical thinking and problem-solving','Digital literacy','Teamwork and leadership'],
+    colleges_mumbai: ['Mumbai University affiliated top colleges','NMIMS University Mumbai','St. Xavier\'s College Mumbai','Tata Institute of Social Sciences (TISS)','Narsee Monjee College of Commerce & Economics'],
+    colleges_outside: ['Delhi University (DU)','Symbiosis University Pune','Christ University Bengaluru','VIT Vellore (Tamil Nadu)','SRM University Chennai'],
+    best_colleges: ['IITs / IIMs – For Engineering / Management','AIIMS / NIMHANS – For Medical','NLSIU Bengaluru – For Law'],
+    jobs: ['Graduate Trainee / Management Trainee','Analyst','Executive','Specialist','Consultant','Entrepreneur','Government Officer (via competitive exams)','Academic / Researcher'],
+    sectors: ['Private corporate sector','Government / Public sector','Education and research','NGOs and social sector','Startups and entrepreneurship'],
+    govt: ['SSC CGL, CHSL (for most graduates)','UPSC Civil Services','State PSC exams','Bank PO / Clerk (IBPS)','Teaching positions (TET, NET)'],
+    salary_entry: '₹2.5 – ₹5 LPA (entry level)',
+    salary_mid: '₹8 – ₹18 LPA (3–5 years experience with skills)',
+    salary_senior: '₹20 – ₹50 LPA (senior professional)',
+    salary_top: '₹50 LPA+ (exceptional performer, top management)',
+    salary_freelance: '₹3 – ₹15 LPA (freelancing / consulting)',
+    cities_india: ['Mumbai, Delhi, Bengaluru, Hyderabad, Pune, Chennai'],
+    cities_global: ['USA, UK, Canada, Australia, UAE, Singapore'],
+    limitations: ['Market competition is high for all popular courses','Career growth requires continuous upskilling','College reputation impacts early career significantly','Patience required for salary growth in initial years'],
+    future: ['Digital transformation is reshaping all career paths','India\'s growing economy will create diverse opportunities','Upskilling and adaptability will determine long-term success','Entrepreneurship and freelancing are rising as viable career paths'],
+    skills_to_build: ['Domain expertise in your chosen field','MS Office and digital tools proficiency','Communication and presentation skills','Networking and professional relationships','Certifications relevant to your field'],
+    fees_mumbai: '₹20,000 – ₹2 Lakhs/year depending on course and college type',
+    fees_outside: '₹15,000 – ₹3 Lakhs/year depending on institution',
+    hostel: '₹50,000 – ₹1.5 Lakhs/year',
+    loan: 'Education loans available from all major banks; PM Vidya Lakshmi Portal',
+    advice: ['Research your chosen career path thoroughly before committing','Talk to professionals already working in the field','Build practical skills alongside academic knowledge','Network actively from your first year of college','Stay consistent — success in any field requires sustained effort over years'],
+  }
+};
+
+function getCareerData(choice) {
+  if (!choice || choice === 'None') return CAREER_DB['default'];
+  for (const key of Object.keys(CAREER_DB)) {
+    if (key !== 'default' && choice.toLowerCase().includes(key.toLowerCase().split(' ')[0].toLowerCase())) return CAREER_DB[key];
+    if (key !== 'default' && key.toLowerCase().includes(choice.toLowerCase().split(' ')[0].toLowerCase())) return CAREER_DB[key];
+  }
+  return CAREER_DB['default'];
+}
+
+function generateReport() {
+  const body = document.getElementById('result-body');
+  const now = new Date();
+  document.getElementById('res-name').textContent = DATA.name;
+  document.getElementById('res-meta').textContent = `Generated on ${now.toLocaleDateString('en-IN', {day:'numeric',month:'long',year:'numeric'})} · CareerCompass Psychometric Report`;
+
+  const streamScores = { 'Science PCM':0, 'Science PCB':0, 'Commerce':0, 'Arts/Humanities':0 };
+  DATA.answers.forEach(a => { if (a.category && streamScores[a.category] !== undefined) streamScores[a.category]++; });
+  const total = Math.max(DATA.answers.length, 1);
+  const sorted = Object.entries(streamScores).sort((a,b) => b[1]-a[1]);
+  const topStream = sorted[0];
+  const secondStream = sorted[1];
+
+  const badges = document.getElementById('res-badges');
+  badges.innerHTML = `
+    <div class="result-badge">${DATA.qualification === 'SSC' ? '10th Standard' : '12th Standard'}</div>
+    <div class="result-badge">${DATA.qualification === 'HSC' ? DATA.stream12 : (DATA.stream10_decided && DATA.stream10_decided !== 'Not decided yet' ? DATA.stream10_decided : 'Exploring All Streams')}</div>
+    <div class="result-badge">Goal: ${DATA.graduation_choice || 'Not Specified'}</div>
+    <div class="result-badge">${DATA.board}</div>
+    <div class="result-badge">Top Match: ${topStream[0]}</div>
+  `;
+
+  // Simulate loading steps
+  const loadEl = document.getElementById('loading-step');
+  const steps = ['Calculating your aptitude scores…','Matching your answers to career profiles…','Pulling up college and salary data…','Preparing your personalised report…'];
+  let si = 0;
+  const iv = setInterval(() => { if (si < steps.length - 1) loadEl.textContent = steps[++si]; }, 900);
+
+  setTimeout(() => {
+    clearInterval(iv);
+    const cd = getCareerData(DATA.graduation_choice);
+    renderReportHTML(body, streamScores, total, topStream, secondStream, cd);
+  }, 3800);
+}
+
+function renderReportHTML(body, streamScores, total, topStream, secondStream, cd) {
+  const q = DATA.qualification;
+  const selectedStream = q === 'HSC' ? DATA.stream12 : (DATA.stream10_decided || 'Not decided yet');
+  const topPct = Math.round(topStream[1] / total * 100);
+  const secondPct = Math.round(secondStream[1] / total * 100);
+  const isMatch = selectedStream && selectedStream !== 'Not decided yet' && topStream[0].toLowerCase().includes(selectedStream.toLowerCase().split(' ')[0].toLowerCase());
+  const isMismatch = selectedStream && selectedStream !== 'Not decided yet' && !isMatch && topPct > 30;
+
+  function sec(icon, title, html) {
+    return `<div class="result-section"><div class="result-section-title"><div class="icon">${icon}</div>${title}</div><div class="result-content">${html}</div></div>`;
+  }
+  function li(items) { return '<ul class="report-list">' + items.map(i => `<li>${i}</li>`).join('') + '</ul>'; }
+  function grid2(items) { return '<div class="report-grid">' + items.map(i => `<div class="grid-item">${i}</div>`).join('') + '</div>'; }
+  function tag(t, cls='') { return `<span class="report-tag ${cls}">${t}</span>`; }
+  function salRow(label, val) { return `<div class="sal-row"><span class="sal-label">${label}</span><span class="sal-val">${val}</span></div>`; }
+
+  // Compatibility bars
+  const bars = Object.entries(streamScores).sort((a,b)=>b[1]-a[1]).map(([s,v]) => {
+    const pct = Math.round(v/total*100);
+    const isTop = s === topStream[0];
+    return `<div class="compat-bar-wrap">
+      <div class="compat-label"><span>${s} ${isTop ? '⭐' : ''}</span><span><strong>${pct}%</strong></span></div>
+      <div class="compat-bar"><div class="compat-fill" style="width:0%" data-width="${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  // Compatibility analysis text
+  let compatText = '';
+  if (selectedStream && selectedStream !== 'Not decided yet') {
+    if (isMatch) {
+      compatText = `<div class="alert-box success">✅ <strong>Great news, ${DATA.name}!</strong> Your psychometric answers strongly align with your chosen stream — <strong>${selectedStream}</strong>. Your natural interests, strengths, and thought patterns match this career direction. You are on the right path!</div>`;
+    } else if (isMismatch) {
+      compatText = `<div class="alert-box warning">⚠️ <strong>Attention, ${DATA.name}!</strong> Your psychometric answers suggest a stronger natural inclination towards <strong>${topStream[0]}</strong> (${topPct}% match), while your chosen stream <strong>${selectedStream}</strong> scored lower. This doesn't mean you can't succeed — but it is worth reflecting on whether your choice is driven by genuine interest or external pressure. Read the full guidance below.</div>`;
+    } else {
+      compatText = `<div class="alert-box info">ℹ️ Your answers show a <strong>${topPct}% alignment with ${topStream[0]}</strong> and a <strong>${secondPct}% alignment with ${secondStream[0]}</strong>. You seem to have a versatile aptitude — continue exploring before committing firmly.</div>`;
+    }
+  } else {
+    compatText = `<div class="alert-box info">ℹ️ Since you haven't yet decided a stream, your psychometric results suggest your strongest natural alignment is with <strong>${topStream[0]}</strong> (${topPct}% match), followed by <strong>${secondStream[0]}</strong> (${secondPct}% match). See the Career Recommendation section for detailed guidance.</div>`;
+  }
+
+  // Career recommendation
+  let recText = '';
+  if (isMismatch) {
+    recText = `<p>Your answers consistently pointed towards <strong>${topStream[0]}</strong> as your best natural fit. Here's what this means for you:</p>
+    ${li([
+      `Your analytical and interest patterns match <strong>${topStream[0]}</strong> students more closely than <strong>${selectedStream}</strong>`,
+      `This could mean you chose your current stream based on peer pressure, parental expectations, or a popular trend rather than your genuine interest`,
+      `<strong>This is not a crisis</strong> — many successful professionals recalibrate their direction. The key is awareness`,
+      `Consider speaking with a career counsellor and exploring if switching is feasible at your stage`,
+      `If you still choose to continue with <strong>${selectedStream}</strong>, you will need extra motivation and self-discipline — but it is absolutely possible to succeed`,
+    ])}`;
+  } else {
+    recText = `<p>Your psychometric profile confirms that <strong>${topStream[0]}</strong> is your strongest match, and your chosen course of <strong>${DATA.graduation_choice || 'your selected course'}</strong> aligns with this direction. Here's your roadmap:</p>
+    ${li([
+      `You have the natural aptitude and interest to succeed in this field — trust your instincts`,
+      `Your second-strongest match is <strong>${secondStream[0]}</strong> (${secondPct}%) — this gives you versatility and cross-domain opportunities`,
+      `Focus deeply on developing the core skills for your chosen course rather than spreading yourself thin`,
+      `Set milestones: clear entrance exam → join target college → complete internship by 2nd year → build portfolio → placement`,
+    ])}`;
+  }
+
+  let html = '';
+
+  // Score section
+  html += `<div class="result-section"><div class="result-section-title"><div class="icon">📊</div>Psychometric Aptitude Score</div>${compatText}${bars}</div>`;
+
+  // Career Recommendation
+  html += sec('🎯','Career Path Recommendation', recText);
+
+  // Course Details
+  html += sec('📚', `Course Details: ${DATA.graduation_choice || 'Your Selected Course'}`,
+    `<p style="margin-bottom:12px">${cd.desc}</p>
+    <strong>Step-by-step pathway:</strong>${li(cd.steps)}
+    <strong>Subjects you will study:</strong>${li(cd.subjects)}
+    <strong>Key skills needed:</strong>${li(cd.skills)}`
+  );
+
+  // Colleges
+  html += sec('🏫','Colleges & Universities',
+    `<strong>Top Colleges in Mumbai:</strong>${li(cd.colleges_mumbai)}
+    <strong>Top Colleges Outside Mumbai (Pan-India):</strong>${li(cd.colleges_outside)}
+    <strong>🏆 Best in India (Why They Stand Out):</strong>${li(cd.best_colleges)}`
+  );
+
+  // Career Opportunities
+  html += sec('💼','Career Opportunities After This Course',
+    `<strong>Job Roles Available:</strong>${li(cd.jobs)}
+    <strong>Sectors & Industries:</strong>${li(cd.sectors)}
+    <strong>Government Career Options:</strong>${li(cd.govt)}`
+  );
+
+  // Salary
+  html += sec('💰','Salary & Financial Outlook',
+    `<div class="sal-table">
+      ${salRow('🟢 Entry Level (Fresher)', cd.salary_entry)}
+      ${salRow('🔵 Mid Career (3–5 years)', cd.salary_mid)}
+      ${salRow('🟣 Senior Level (10+ years)', cd.salary_senior)}
+      ${salRow('⭐ Top Performers', cd.salary_top)}
+      ${salRow('💻 Freelance / Business', cd.salary_freelance)}
+    </div>`
+  );
+
+  // Locations
+  html += sec('🌍','Best Places for This Career',
+    `<strong>Top Cities in India:</strong>${li(cd.cities_india)}
+    <strong>Global Opportunities:</strong>${li(cd.cities_global)}`
+  );
+
+  // Future Scope
+  html += sec('📈','Future Scope (Next 10 Years)',
+    li(cd.future)
+  );
+
+  // Skills
+  html += sec('🛠️','Skills & Certifications to Build',
+    li(cd.skills_to_build)
+  );
+
+  // Limitations
+  html += sec('⚠️','Honest Challenges & Limitations',
+    `<p style="margin-bottom:10px">Every career has real challenges. Here is what you must know <em>before</em> committing:</p>` + li(cd.limitations)
+  );
+
+  // Investment
+  html += sec('💸','Total Investment to Complete This Course',
+    `<div class="sal-table">
+      ${salRow('📍 Fees – Mumbai Colleges', cd.fees_mumbai)}
+      ${salRow('🗺️ Fees – Outside Mumbai', cd.fees_outside)}
+      ${salRow('🏠 Hostel / Living Costs', cd.hostel)}
+      ${salRow('💳 Education Loan Options', cd.loan)}
+    </div>`
+  );
+
+  // Counsellor Advice
+  html += sec('💡','Counsellor\'s Special Advice for You',
+    `<p style="margin-bottom:12px">Here is personalised guidance specifically for <strong>${DATA.name}</strong> based on your test profile:</p>
+    ${li(cd.advice)}
+    <div class="alert-box success" style="margin-top:16px">
+      <strong>🌟 Final Message:</strong> ${DATA.name}, every great professional started exactly where you are today — with questions, options, and a little uncertainty. The fact that you took this test shows you care about making the right choice. Keep exploring, keep asking questions, and trust that consistent effort always leads to a rewarding career. You've got this! 💪
+    </div>`
+  );
+
+  body.innerHTML = html + `<style>
+    .report-list { padding-left: 18px; margin: 10px 0; }
+    .report-list li { margin-bottom: 7px; line-height: 1.6; font-size: 0.875rem; color: var(--text-light); }
+    .sal-table { background: #f9f7f4; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    .sal-row { display: flex; justify-content: space-between; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); font-size: 0.875rem; }
+    .sal-row:last-child { border-bottom: none; }
+    .sal-label { color: var(--text); font-weight: 500; }
+    .sal-val { color: var(--navy); font-weight: 600; text-align: right; max-width: 55%; }
+    .alert-box { border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; font-size: 0.875rem; line-height: 1.6; }
+    .alert-box.success { background: rgba(45,122,79,0.08); border: 1px solid rgba(45,122,79,0.25); color: #1a5c3a; }
+    .alert-box.warning { background: rgba(192,57,43,0.07); border: 1px solid rgba(192,57,43,0.2); color: #8B2500; }
+    .alert-box.info { background: rgba(13,27,62,0.06); border: 1px solid rgba(13,27,62,0.15); color: var(--navy); }
+    .report-tag { display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; margin:2px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); color:var(--gold); }
+  </style>`;
+
+  document.getElementById('share-row').style.display = 'flex';
+  reportGenerated = true;
+
+  setTimeout(() => {
+    document.querySelectorAll('.compat-fill').forEach(el => {
+      el.style.width = el.dataset.width;
+    });
+  }, 200);
+
+  // Save the report HTML to Drive and update sheet link
+  const reportHTMLContent = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Career Report - ' + DATA.name + '</title>' +
+    '<style>body{font-family:sans-serif;max-width:900px;margin:40px auto;padding:0 20px;color:#1a1a2e}' +
+    'h2{color:#0d1b3e}.result-section{border:1px solid #d8d4cc;border-radius:12px;padding:24px;margin-bottom:20px}' +
+    '.result-section-title{font-size:1.05rem;font-weight:700;color:#0d1b3e;margin-bottom:12px}' +
+    'ul{padding-left:20px;line-height:1.8}.sal-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}' +
+    '.alert-box{padding:14px;border-radius:8px;margin-bottom:14px}.alert-box.success{background:#e8f5ee;border:1px solid #2d7a4f;color:#1a5c3a}' +
+    '.alert-box.warning{background:#fdf0ee;border:1px solid #c0392b;color:#8B2500}' +
+    '.alert-box.info{background:#eef2fa;border:1px solid #aab;color:#0d1b3e}</style></head><body>' +
+    '<h2 style="text-align:center;color:#c9a84c">CareerCompass — Psychometric Report</h2>' +
+    '<p style="text-align:center;color:#5a6080">Student: <strong>' + DATA.name + '</strong> | Date: ' + new Date().toLocaleDateString('en-IN') + '</p><hr>' +
+    document.getElementById('result-body').innerHTML + '</body></html>';
+  saveReportLinkToSheet(reportHTMLContent);
+}
+
+function copyReport() {
+  const text = document.getElementById('result-body').innerText;
+  navigator.clipboard.writeText(text).then(() => alert('Report copied to clipboard!')).catch(() => alert('Could not copy — try selecting and copying manually.'));
+}
+</script>
+</body>
+</html>
